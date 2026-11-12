@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>BirrGo — BYD Song Plus Raffle</title>
+    <title>BYD Song Plus Raffle</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        /* Default Dark Theme */
         :root {
             --bg-body: #000000;
             --bg-shell: #0a0a0c;
@@ -32,7 +31,6 @@
             --radius-md: 10px;
         }
 
-        /* Light Theme Override */
         [data-theme="light"] {
             --bg-body: #f3f4f6;
             --bg-shell: #ffffff;
@@ -73,7 +71,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Fixed Single-Page Viewport Shell */
         .app-shell {
             width: 100%;
             max-width: 460px;
@@ -86,12 +83,8 @@
             overflow: hidden;
             border-left: 1px solid var(--border);
             border-right: 1px solid var(--border);
-            transition: background-color 0.2s, border-color 0.2s;
         }
 
-        /* -------------------------------------------------------------
-           STICKY TOP NAVIGATION BAR
-        ------------------------------------------------------------- */
         .top-nav {
             display: flex;
             align-items: center;
@@ -128,11 +121,6 @@
             justify-content: center;
             cursor: pointer;
             position: relative;
-            transition: background 0.15s, border-color 0.15s;
-        }
-
-        .icon-btn:active {
-            background: var(--bg-subtle);
         }
 
         .nav-title {
@@ -159,9 +147,6 @@
             border: 2px solid var(--bg-shell);
         }
 
-        /* -------------------------------------------------------------
-           SCROLLABLE COMPACT CONTENT BODY
-        ------------------------------------------------------------- */
         .main-body {
             padding: 14px 18px calc(116px + env(safe-area-inset-bottom, 0px));
             display: flex;
@@ -176,7 +161,6 @@
             display: none;
         }
 
-        /* Compact Campaign Card */
         .campaign-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -265,7 +249,6 @@
             transition: width 0.4s ease;
         }
 
-        /* Compact Form Controls */
         .form-section {
             display: flex;
             flex-direction: column;
@@ -301,15 +284,6 @@
             color: var(--text-primary);
             background: var(--bg-card);
             outline: none;
-            transition: border-color 0.15s;
-        }
-
-        .text-input:focus {
-            border-color: var(--border-focus);
-        }
-
-        .text-input::placeholder {
-            color: var(--text-tertiary);
         }
 
         .number-picker-box {
@@ -329,11 +303,6 @@
             color: var(--text-primary);
             background: var(--bg-card);
             outline: none;
-            transition: all 0.15s;
-        }
-
-        .number-input:focus {
-            border-color: var(--border-focus);
         }
 
         .btn-random {
@@ -349,11 +318,6 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            transition: background 0.15s;
-        }
-
-        .btn-random:active {
-            background: var(--bg-subtle);
         }
 
         .availability-status {
@@ -378,78 +342,6 @@
             color: var(--danger);
         }
 
-        /* Live Feed Section */
-        .feed-section {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            flex: 1;
-            min-height: 110px;
-        }
-
-        .feed-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .live-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--emerald);
-        }
-
-        .live-dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: var(--emerald);
-        }
-
-        .feed-list {
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            background: var(--bg-card);
-            overflow-y: auto;
-            max-height: 130px;
-        }
-
-        .feed-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 9px 12px;
-            font-size: 12.5px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .feed-item:last-child {
-            border-bottom: none;
-        }
-
-        .feed-phone {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--text-secondary);
-            font-size: 12px;
-        }
-
-        .feed-pos {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            font-size: 11.5px;
-            color: var(--text-primary);
-            background: var(--bg-subtle);
-            border: 1px solid var(--border);
-            padding: 2px 7px;
-            border-radius: 5px;
-        }
-
-        /* -------------------------------------------------------------
-           FIXED BOTTOM COVERING FOOTER (OVER NAVIGATION BAR)
-        ------------------------------------------------------------- */
         .footer-bar {
             position: absolute;
             bottom: 0;
@@ -477,11 +369,6 @@
             font-size: 13.5px;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.15s;
-        }
-
-        .btn-primary:active:not(:disabled) {
-            background: var(--brand-hover);
         }
 
         .btn-primary:disabled {
@@ -504,16 +391,8 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            transition: background 0.15s;
         }
 
-        .btn-secondary-link:active {
-            background: var(--bg-subtle);
-        }
-
-        /* -------------------------------------------------------------
-           MODALS
-        ------------------------------------------------------------- */
         .modal-backdrop {
             position: fixed;
             inset: 0;
@@ -652,43 +531,17 @@
             font-size: 11px;
             color: var(--text-secondary);
         }
-
-        .pin-field {
-            width: 100%;
-            height: 44px;
-            border: 1px solid var(--border);
-            background: var(--bg-shell);
-            border-radius: var(--radius-md);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: 8px;
-            text-align: center;
-            color: var(--text-primary);
-            margin-bottom: 14px;
-            outline: none;
-        }
-
-        .pin-field:focus {
-            border-color: var(--border-focus);
-        }
     </style>
 </head>
 <body>
 
     <div class="app-shell">
-        <!-- Sticky Top Navigation Bar with Theme Toggle -->
         <header class="top-nav">
             <div class="nav-left">
-                <button class="icon-btn" onclick="window.location.href='lottery.html'" aria-label="Back">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                </button>
                 <span class="nav-title">BYD Song Plus Raffle</span>
             </div>
             <div class="nav-actions">
-                <!-- Dark / Light Theme Toggle -->
                 <button class="icon-btn" id="themeToggleBtn" aria-label="Toggle Dark or Light Mode">
-                    <!-- Sun Icon (shown in dark mode to switch to light) -->
                     <svg id="sunIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
                         <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -700,13 +553,10 @@
                         <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
-                    <!-- Moon Icon (shown in light mode to switch to dark) -->
                     <svg id="moonIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
                 </button>
-
-                <!-- Notifications / My Tickets -->
                 <button class="icon-btn" onclick="window.location.href='bydur.html'" aria-label="My Tickets">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                     <span class="badge-dot" id="notifCountBadge" style="display:none;">0</span>
@@ -714,9 +564,7 @@
             </div>
         </header>
 
-        <!-- Compact Scrollable Body -->
         <main class="main-body">
-            <!-- Campaign Summary Card -->
             <section class="campaign-card">
                 <div class="campaign-top">
                     <div>
@@ -725,7 +573,7 @@
                     </div>
                     <div class="ticket-cost">
                         <span>Price</span>
-                        <strong>3,000 Br</strong>
+                        <strong id="displayTicketPrice">0 Br</strong>
                     </div>
                 </div>
 
@@ -736,7 +584,7 @@
                     </div>
                     <div class="metric-item">
                         <span>Available</span>
-                        <strong id="statRemaining">3500</strong>
+                        <strong id="statRemaining">0</strong>
                     </div>
                 </div>
 
@@ -745,22 +593,27 @@
                 </div>
             </section>
 
-            <!-- Location Input -->
             <section class="form-section">
                 <div class="label-row">
-                    <label class="field-label" for="userLocation">1. City / Location</label>
+                    <label class="field-label" for="userFullName">1. Full Name</label>
                     <span class="quota-pill" id="dailyQuotaBadge">Today: 0/5</span>
+                </div>
+                <input type="text" id="userFullName" class="text-input" placeholder="e.g. Abebe Kebede">
+            </section>
+
+            <section class="form-section">
+                <div class="label-row">
+                    <label class="field-label" for="userLocation">2. City / Location</label>
                 </div>
                 <input type="text" id="userLocation" class="text-input" placeholder="e.g. Addis Ababa">
             </section>
 
-            <!-- Position Picker -->
             <section class="form-section">
                 <div class="label-row">
-                    <label class="field-label" for="ticketNumberInput">2. Position (0 – 3500)</label>
+                    <label class="field-label" for="ticketNumberInput" id="ticketRangeLabel">3. Position (0 – 0)</label>
                 </div>
                 <div class="number-picker-box">
-                    <input type="number" id="ticketNumberInput" class="number-input" placeholder="0000" min="0" max="3500">
+                    <input type="number" id="ticketNumberInput" class="number-input" placeholder="0" min="0" max="0">
                     <button type="button" class="btn-random" id="luckyPickBtn">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
                         Random
@@ -768,20 +621,10 @@
                 </div>
                 <div id="feedbackBadge" class="availability-status"></div>
             </section>
-
-            <!-- Live Allocations -->
-            <section class="feed-section">
-                <div class="feed-header">
-                    <span class="field-label">Live Stream</span>
-                    <span class="live-tag"><span class="live-dot"></span>Live</span>
-                </div>
-                <div id="liveOrdersFeed" class="feed-list"></div>
-            </section>
         </main>
 
-        <!-- Fixed Bottom Action Bar Covering Navigation Bar -->
         <footer class="footer-bar">
-            <button class="btn-primary" id="confirmPurchaseBtn" disabled>Reserve Position • 3,000 Br</button>
+            <button class="btn-primary" id="confirmPurchaseBtn" disabled>Reserve Position • 0 Br</button>
             <a href="Byds.html" class="btn-secondary-link">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                 View Full Number Matrix
@@ -824,18 +667,6 @@
         </div>
     </div>
 
-    <div class="modal-backdrop" id="passwordModal">
-        <div class="modal-box">
-            <h3 class="modal-title">Authorize</h3>
-            <p class="modal-desc">Enter your 6-digit security PIN.</p>
-            <input type="password" id="transactionPin" maxlength="6" inputmode="numeric" class="pin-field" placeholder="••••••" autocomplete="off">
-            <div class="modal-actions">
-                <button class="btn-modal-ghost" id="closeModalBtn">Cancel</button>
-                <button class="btn-modal-solid" id="submitPasswordBtn">Confirm</button>
-            </div>
-        </div>
-    </div>
-
     <div class="modal-backdrop" id="errorModal">
         <div class="modal-box">
             <h3 class="modal-title">Notice</h3>
@@ -847,9 +678,8 @@
     <!-- Theme & Firebase Logic Engine -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, onValue, push, update, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, onValue, push, update, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Theme Management (Persistent Dark / Light Toggle)
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const sunIcon = document.getElementById('sunIcon');
         const moonIcon = document.getElementById('moonIcon');
@@ -864,10 +694,10 @@
                 sunIcon.style.display = 'block';
                 moonIcon.style.display = 'none';
             }
-            localStorage.setItem('birrgo_theme', theme);
+            localStorage.setItem('byd_theme', theme);
         }
 
-        const savedTheme = localStorage.getItem('birrgo_theme') || 'dark';
+        const savedTheme = localStorage.getItem('byd_theme') || 'dark';
         applyTheme(savedTheme);
 
         themeToggleBtn.addEventListener('click', () => {
@@ -875,15 +705,8 @@
             applyTheme(currentTheme === 'light' ? 'dark' : 'light');
         });
 
-        // Firebase Setup
         const firebaseConfig = {
-            apiKey: "AIzaSyCRHoIZf1ZPR9m3YYTv-I9CfwyGqsSOMWo",
-            authDomain: "birrgo-fdf7e.firebaseapp.com",
-            databaseURL: "https://birrgo-fdf7e-default-rtdb.firebaseio.com",
-            projectId: "birrgo-fdf7e",
-            storageBucket: "birrgo-fdf7e.firebasestorage.app",
-            messagingSenderId: "2317445154",
-            appId: "1:2317445154:web:4275cbb0f46b28f64f827b"
+            databaseURL: "https://byd-87f69-default-rtdb.firebaseio.com"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -891,6 +714,7 @@
 
         let activeUserPhone = "";
         let completeRawCardSequence = ""; 
+        let userCountry = "Ethiopia";
         let isTicketAvailable = false;
         let validatedTicketNumber = null;
         let globallyTakenTicketsMap = {}; 
@@ -900,7 +724,8 @@
         let activeUnpaidOrder = null;
         
         const maxDailyTicketsLimit = 5;
-        const totalPoolCount = 3500;
+        let totalPoolCount = 0;
+        let ticketPrice = 0;
 
         const paymentImages = {
             cbe: 'c2.jpg',
@@ -910,30 +735,9 @@
             mpesa: 'm1.jpg'
         };
 
-        async function hashSHA256(str) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(str);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
         function normalizePhoneNumber(phoneStr) {
-            if (!phoneStr) return "";
+            if (!phoneStr) return "251900000000";
             return phoneStr.replace(/\D/g, ''); 
-        }
-
-        function formatMaskedPhone(phoneStr) {
-            if (!phoneStr) return "+251000000**00";
-            let digits = phoneStr.replace(/\D/g, '');
-            if (digits.startsWith("0")) digits = "251" + digits.slice(1);
-            if (!digits.startsWith("251") && digits.length === 9) digits = "251" + digits;
-
-            if (digits.length >= 12) {
-                return `+${digits.substring(0, 8)}**${digits.slice(-2)}`;
-            }
-            const mid = Math.floor(digits.length / 2);
-            return "+" + digits.substring(0, mid - 1) + "**" + digits.substring(mid + 1);
         }
 
         function showCustomError(message) {
@@ -942,9 +746,16 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            activeUserPhone = localStorage.getItem('auth_session_phone') || "251900000000";
+            let rawPhone = sessionStorage.getItem('auth_session_phone') || localStorage.getItem('auth_session_phone');
+            if (!rawPhone) {
+                rawPhone = "251900000000";
+                sessionStorage.setItem('auth_session_phone', rawPhone);
+            }
+            activeUserPhone = rawPhone;
             completeRawCardSequence = normalizePhoneNumber(activeUserPhone);
+            userCountry = sessionStorage.getItem('auth_session_country') || localStorage.getItem('auth_session_country') || "Ethiopia";
 
+            fetchGlobalSettings();
             attachRealtimeDatabaseListeners();
             setupFormEngineListeners();
             listenToAdminPaymentAccounts();
@@ -954,18 +765,35 @@
             });
         });
 
+        function fetchGlobalSettings() {
+            const configRef = ref(db, 'new_byd_settings/config');
+            onValue(configRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    const cfg = snapshot.val();
+                    totalPoolCount = cfg.totalTickets !== undefined ? (parseInt(cfg.totalTickets) || 0) : 0;
+                    ticketPrice = cfg.ticketPrice !== undefined ? (parseFloat(cfg.ticketPrice) || 0) : 0;
+
+                    document.getElementById('displayTicketPrice').innerText = `${ticketPrice.toLocaleString()} Br`;
+                    document.getElementById('confirmPurchaseBtn').innerText = `Reserve Position • ${ticketPrice.toLocaleString()} Br`;
+                    document.getElementById('ticketRangeLabel').innerText = `3. Position (0 – ${totalPoolCount})`;
+                    document.getElementById('ticketNumberInput').max = totalPoolCount;
+
+                    updatePoolMetrics();
+                    executeLiveTicketStatusCheck();
+                    renderPaymentMethodsList();
+                }
+            });
+        }
+
         function attachRealtimeDatabaseListeners() {
             const ticketsRef = ref(db, 'new_byd/tickets');
             onValue(ticketsRef, (snapshot) => {
                 globallyTakenTicketsMap = snapshot.val() || {};
-                const takenEntries = Object.entries(globallyTakenTicketsMap);
                 
-                let pendingCount = 0;
-                let approvedCount = 0;
                 let userTicketsCount = 0;
                 activeUnpaidOrder = null;
 
-                takenEntries.forEach(([ticketKey, entry]) => {
+                Object.entries(globallyTakenTicketsMap).forEach(([ticketKey, entry]) => {
                     const st = (entry.status || '').toLowerCase().trim();
                     const isUserMatch = entry.cardSequence === completeRawCardSequence || entry.phone === activeUserPhone;
 
@@ -974,12 +802,6 @@
                         if (st === 'unpaid') {
                             activeUnpaidOrder = { key: ticketKey, ...entry };
                         }
-                    }
-
-                    if (st === 'pending' || st === 'pending approval') {
-                        pendingCount++;
-                    } else if (st === 'approved') {
-                        approvedCount++;
                     }
                 });
 
@@ -998,18 +820,31 @@
                     document.getElementById('unpaidOrderModal').classList.remove('active');
                 }
 
-                const paidTotal = pendingCount + approvedCount;
-                const totalLeft = Math.max(0, totalPoolCount - paidTotal);
-                const progressPercent = Math.min(100, (paidTotal / totalPoolCount) * 100);
-                
-                document.getElementById('statSold').innerText = paidTotal;
-                document.getElementById('statRemaining').innerText = totalLeft;
-                document.getElementById('poolProgressBar').style.width = `${progressPercent}%`;
-                
+                updatePoolMetrics();
                 calculateUserDailyTicketCount();
-                executeLiveTicketStatusCheck();
-                renderLiveOrdersFeed(globallyTakenTicketsMap);
             });
+        }
+
+        function updatePoolMetrics() {
+            let pendingCount = 0;
+            let approvedCount = 0;
+
+            Object.values(globallyTakenTicketsMap).forEach(entry => {
+                const st = (entry.status || '').toLowerCase().trim();
+                if (st === 'pending' || st === 'pending approval') {
+                    pendingCount++;
+                } else if (st === 'approved') {
+                    approvedCount++;
+                }
+            });
+
+            const paidTotal = pendingCount + approvedCount;
+            const totalLeft = Math.max(0, totalPoolCount - paidTotal);
+            const progressPercent = totalPoolCount > 0 ? Math.min(100, (paidTotal / totalPoolCount) * 100) : 0;
+            
+            document.getElementById('statSold').innerText = paidTotal;
+            document.getElementById('statRemaining').innerText = totalLeft;
+            document.getElementById('poolProgressBar').style.width = `${progressPercent}%`;
         }
 
         function calculateUserDailyTicketCount() {
@@ -1032,10 +867,7 @@
         function listenToAdminPaymentAccounts() {
             const accountsRef = ref(db, 'new_byd_settings/accounts');
             onValue(accountsRef, (snapshot) => {
-                const methodsContainer = document.getElementById('adminPaymentMethodsList');
-                methodsContainer.innerHTML = '';
                 dynamicAdminAccounts = {};
-
                 if (snapshot.exists()) {
                     const data = snapshot.val();
                     Object.keys(data).forEach(key => {
@@ -1044,44 +876,63 @@
                             dynamicAdminAccounts[key] = {
                                 name: accountObj.name || key.toUpperCase(),
                                 account: accountObj.number || accountObj.account,
-                                holder_name: accountObj.holder_name || accountObj.name || 'BirrGo Trading PLC',
+                                holder_name: accountObj.holder_name || accountObj.name || 'BYD Raffle Official',
                                 image: paymentImages[key] || 'c2.jpg'
                             };
-
-                            const row = document.createElement('div');
-                            row.className = 'method-row';
-                            row.onclick = () => {
-                                selectedMethodKey = key;
-                                document.getElementById('paymentMethodModal').classList.remove('active');
-                                document.getElementById('transactionPin').value = '';
-                                document.getElementById('passwordModal').classList.add('active');
-                                document.getElementById('transactionPin').focus();
-                            };
-                            row.innerHTML = `
-                                <div class="method-left">
-                                    <img src="${dynamicAdminAccounts[key].image}" class="method-img" alt="${key}">
-                                    <div>
-                                        <div class="method-title">${dynamicAdminAccounts[key].name}</div>
-                                        <div class="method-sub">3,000 Br</div>
-                                    </div>
-                                </div>
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            `;
-                            methodsContainer.appendChild(row);
                         }
                     });
                 }
+                renderPaymentMethodsList();
+            });
+        }
+
+        function renderPaymentMethodsList() {
+            const methodsContainer = document.getElementById('adminPaymentMethodsList');
+            methodsContainer.innerHTML = '';
+            const keys = Object.keys(dynamicAdminAccounts);
+
+            if (keys.length === 0) {
+                methodsContainer.innerHTML = `<p style="font-size:12px; color:var(--text-secondary); text-align:center; padding: 12px;">No payment accounts available.</p>`;
+                return;
+            }
+
+            keys.forEach(key => {
+                const acc = dynamicAdminAccounts[key];
+                const row = document.createElement('div');
+                row.className = 'method-row';
+                row.onclick = () => {
+                    selectedMethodKey = key;
+                    document.getElementById('paymentMethodModal').classList.remove('active');
+                    processTicketReservation();
+                };
+                row.innerHTML = `
+                    <div class="method-left">
+                        <img src="${acc.image}" class="method-img" alt="${key}">
+                        <div>
+                            <div class="method-title">${acc.name}</div>
+                            <div class="method-sub">${ticketPrice.toLocaleString()} Br</div>
+                        </div>
+                    </div>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                `;
+                methodsContainer.appendChild(row);
             });
         }
 
         function setupFormEngineListeners() {
+            const nameInput = document.getElementById('userFullName');
             const numInput = document.getElementById('ticketNumberInput');
             const locInput = document.getElementById('userLocation');
 
+            nameInput.addEventListener('input', validateGlobalInputsState);
             numInput.addEventListener('input', executeLiveTicketStatusCheck);
             locInput.addEventListener('input', validateGlobalInputsState);
 
             document.getElementById('luckyPickBtn').addEventListener('click', () => {
+                if (totalPoolCount <= 0) {
+                    showCustomError("No positions available yet.");
+                    return;
+                }
                 const takenSet = new Set(Object.values(globallyTakenTicketsMap).map(e => parseInt(e.ticketNum)));
                 if (takenSet.size >= totalPoolCount) {
                     showCustomError("All positions taken.");
@@ -1138,22 +989,19 @@
                     showCustomError("No active unpaid order.");
                     return;
                 }
-                localStorage.setItem('pending_byd_orderRef', activeUnpaidOrder.orderRef);
-                localStorage.setItem('pending_byd_ticketNum', activeUnpaidOrder.ticketNum);
-                localStorage.setItem('pending_byd_location', activeUnpaidOrder.location);
-                localStorage.setItem('pending_byd_ticketKey', activeUnpaidOrder.key);
-                window.location.href = "las.html";
+                sessionStorage.setItem('pending_byd_orderRef', activeUnpaidOrder.orderRef);
+                sessionStorage.setItem('pending_byd_ticketNum', activeUnpaidOrder.ticketNum);
+                sessionStorage.setItem('pending_byd_fullName', activeUnpaidOrder.fullName || '');
+                sessionStorage.setItem('pending_byd_location', activeUnpaidOrder.location);
+                sessionStorage.setItem('pending_byd_ticketKey', activeUnpaidOrder.key);
+                sessionStorage.setItem('pending_byd_selectedMethod', activeUnpaidOrder.paymentMethod || 'cbe');
+                sessionStorage.setItem('pending_byd_ticketPrice', ticketPrice);
+                window.location.href = "ocr.html";
             });
 
             document.getElementById('closePaymentModalBtn').addEventListener('click', () => {
                 document.getElementById('paymentMethodModal').classList.remove('active');
             });
-
-            document.getElementById('closeModalBtn').addEventListener('click', () => {
-                document.getElementById('passwordModal').classList.remove('active');
-            });
-
-            document.getElementById('submitPasswordBtn').addEventListener('click', processPinVerification);
         }
 
         function executeLiveTicketStatusCheck() {
@@ -1180,9 +1028,9 @@
                 return;
             }
 
-            if(targetNum < 0 || targetNum > 3500) {
+            if(targetNum < 0 || targetNum > totalPoolCount) {
                 feedback.className = "availability-status taken";
-                feedback.innerText = "Range: 0 - 3500";
+                feedback.innerText = `Range: 0 - ${totalPoolCount}`;
                 isTicketAvailable = false;
                 validatedTicketNumber = null;
                 validateGlobalInputsState();
@@ -1209,48 +1057,24 @@
         }
 
         function validateGlobalInputsState() {
+            const fullName = document.getElementById('userFullName').value.trim();
             const location = document.getElementById('userLocation').value.trim();
             const submitBtn = document.getElementById('confirmPurchaseBtn');
-            if(location.length >= 2 && isTicketAvailable && validatedTicketNumber !== null && userDailyTicketCount < maxDailyTicketsLimit && !activeUnpaidOrder) {
+            if(fullName.length >= 2 && location.length >= 2 && isTicketAvailable && validatedTicketNumber !== null && userDailyTicketCount < maxDailyTicketsLimit && !activeUnpaidOrder) {
                 submitBtn.disabled = false;
             } else {
                 submitBtn.disabled = true;
             }
         }
 
-        function renderLiveOrdersFeed(data) {
-            const container = document.getElementById('liveOrdersFeed');
-            container.innerHTML = '';
-            
-            const validEntries = Object.values(data).filter(tx => {
-                const st = (tx.status || '').toLowerCase().trim();
-                return st === 'approved' || st === 'pending' || st === 'pending approval';
-            });
-
-            if(validEntries.length === 0) {
-                container.innerHTML = `<div style="text-align:center;font-size:12px;color:var(--text-tertiary);padding:14px;">No recent allocations</div>`;
-                return;
-            }
-
-            validEntries.reverse().slice(0, 6).forEach(tx => {
-                const row = document.createElement('div');
-                row.className = 'feed-item';
-                const rawPhone = tx.phone || tx.cardSequence || "251900000000";
-                const maskedPhone = formatMaskedPhone(rawPhone);
-
-                row.innerHTML = `<span class="feed-phone">${maskedPhone}</span><span class="feed-pos">#${tx.ticketNum}</span>`;
-                container.appendChild(row);
-            });
-        }
-
-        async function processPinVerification() {
-            const pinInput = document.getElementById('transactionPin').value.trim();
+        async function processTicketReservation() {
+            const fullName = document.getElementById('userFullName').value.trim();
             const userCity = document.getElementById('userLocation').value.trim();
             const rawInputVal = document.getElementById('ticketNumberInput').value.trim();
             const finalTicketNum = (validatedTicketNumber !== null && validatedTicketNumber !== undefined) ? validatedTicketNumber : rawInputVal;
 
-            if (pinInput.length !== 6) {
-                showCustomError("Enter 6-digit PIN.");
+            if (!fullName) {
+                showCustomError("Enter your full name.");
                 return;
             }
             if (!userCity) {
@@ -1262,77 +1086,58 @@
                 return;
             }
 
-            try {
-                let userRef = ref(db, `users/${completeRawCardSequence}/pin`);
-                let snapshot = await get(userRef);
-
-                if (!snapshot.exists()) {
-                    userRef = ref(db, `users/${activeUserPhone}/pin`);
-                    snapshot = await get(userRef);
-                }
-
-                const hashedInputPin = await hashSHA256(pinInput);
-
-                if (snapshot.exists()) {
-                    const storedPinValue = String(snapshot.val()).trim();
-                    if (storedPinValue !== hashedInputPin && storedPinValue !== pinInput) {
-                        showCustomError("Incorrect PIN.");
-                        return;
-                    }
-                } else {
-                    const pinUpdate = {};
-                    pinUpdate[`/users/${completeRawCardSequence}/pin`] = hashedInputPin;
-                    await update(ref(db), pinUpdate);
-                }
-            } catch (err) {
-                console.error("PIN Verification Error:", err);
-                showCustomError("Verification failed. Try again.");
-                return;
-            }
-
-            document.getElementById('passwordModal').classList.remove('active');
-
             const timestampStr = new Date().toLocaleString();
-            const currentOrderRef = 'BG-' + Math.floor(100000 + Math.random() * 900000);
+            const currentOrderRef = 'BYD-' + Math.floor(100000 + Math.random() * 900000);
 
             const ticketRefNode = push(ref(db, 'new_byd/tickets'));
-            const userTxRefNode = push(ref(db, `users/${completeRawCardSequence}/transactions`));
-
             const currentTicketKey = ticketRefNode.key;
-            const currentTxKey = userTxRefNode.key;
+            const currentTxKey = 'tx_' + Date.now();
 
-            const atomicUpdates = {};
-            atomicUpdates[`/new_byd/tickets/${currentTicketKey}`] = {
-                cardSequence: completeRawCardSequence, 
-                phone: activeUserPhone, 
-                ticketNum: finalTicketNum,
-                location: userCity, 
-                timestamp: timestampStr, 
-                status: 'unpaid',
-                orderRef: currentOrderRef
-            };
-            atomicUpdates[`/users/${completeRawCardSequence}/transactions/${currentTxKey}`] = {
-                title: `🎟️ BYD Raffle Ticket #${finalTicketNum}`, 
-                amount: 3000, 
-                type: 'ticket', 
-                status: 'unpaid',
-                campaign: 'BYD Song Plus', 
-                ticketNum: finalTicketNum, 
-                location: userCity,
-                orderRef: currentOrderRef, 
-                timestamp: timestampStr
-            };
+            try {
+                await set(ref(db, `users/${completeRawCardSequence}/phone`), activeUserPhone);
+                await set(ref(db, `users/${completeRawCardSequence}/fullName`), fullName);
+                await set(ref(db, `users/${completeRawCardSequence}/country`), userCountry);
 
-            await update(ref(db), atomicUpdates);
+                const ticketData = {
+                    cardSequence: completeRawCardSequence, 
+                    phone: activeUserPhone, 
+                    fullName: fullName,
+                    ticketNum: Number(finalTicketNum),
+                    location: userCity, 
+                    timestamp: timestampStr, 
+                    status: 'unpaid',
+                    orderRef: currentOrderRef
+                };
+                await set(ref(db, `new_byd/tickets/${currentTicketKey}`), ticketData);
 
-            localStorage.setItem('pending_byd_orderRef', currentOrderRef);
-            localStorage.setItem('pending_byd_ticketNum', finalTicketNum);
-            localStorage.setItem('pending_byd_location', userCity);
-            localStorage.setItem('pending_byd_ticketKey', currentTicketKey);
-            localStorage.setItem('pending_byd_txKey', currentTxKey);
-            localStorage.setItem('pending_byd_selectedMethod', selectedMethodKey);
+                const txData = {
+                    title: `🎟️ BYD Raffle Ticket #${finalTicketNum}`, 
+                    amount: Number(ticketPrice), 
+                    type: 'ticket', 
+                    status: 'unpaid',
+                    campaign: 'BYD Song Plus', 
+                    fullName: fullName,
+                    ticketNum: Number(finalTicketNum), 
+                    location: userCity,
+                    orderRef: currentOrderRef, 
+                    timestamp: timestampStr
+                };
+                await set(ref(db, `users/${completeRawCardSequence}/transactions/${currentTxKey}`), txData);
 
-            window.location.href = "las.html";
+                sessionStorage.setItem('pending_byd_orderRef', currentOrderRef);
+                sessionStorage.setItem('pending_byd_ticketNum', finalTicketNum);
+                sessionStorage.setItem('pending_byd_fullName', fullName);
+                sessionStorage.setItem('pending_byd_location', userCity);
+                sessionStorage.setItem('pending_byd_ticketKey', currentTicketKey);
+                sessionStorage.setItem('pending_byd_txKey', currentTxKey);
+                sessionStorage.setItem('pending_byd_selectedMethod', selectedMethodKey);
+                sessionStorage.setItem('pending_byd_ticketPrice', ticketPrice);
+
+                window.location.href = "ocr.html";
+            } catch (err) {
+                console.error("Reservation Error Detail:", err);
+                showCustomError("Reservation failed. Try again.");
+            }
         }
     </script>
 </body>

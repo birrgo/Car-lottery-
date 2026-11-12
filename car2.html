@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>BirrGo - BYD Recent Tickets Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --dark-bg: #090305;
+            --primary-burgundy: #4a0011;
+            --primary-gradient: linear-gradient(135deg, #600016 0%, #200006 100%);
+            /* 3D Light Blue / Cyan Button Gradients */
+            --light-blue-gradient: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            --light-blue-shadow: 0 6px 0 #0369a1, 0 12px 25px rgba(2, 132, 199, 0.4);
+            --gold-gradient: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+            --accent-red: #dc2626;
+            --text-light: #f8fafc;
+            --text-muted: #cbd5e1;
+            --card-bg: rgba(25, 10, 15, 0.85);
+            --border-glass: rgba(255, 255, 255, 0.15);
+            --card-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.6);
+            --border-radius-md: 16px;
+        }
+
+        /* Black and White Mode Overrides */
+        body.bw-mode {
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-light: #0f172a;
+            --text-muted: #334155;
+            --border-glass: rgba(0, 0, 0, 0.2);
+            --accent-red: #000000;
+        }
+
+        body.bw-mode .app-header {
+            background: rgba(241, 245, 249, 0.85) !important;
+            color: #0f172a;
+        }
+
+        body.bw-mode .metric-card,
+        body.bw-mode .info-description-card,
+        body.bw-mode .ticket-grid-box,
+        body.bw-mode .loading-text {
+            background: rgba(248, 250, 252, 0.9) !important;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            color: #0f172a;
+        }
+
+        body.bw-mode .metric-card.taken { border-left: 4px solid #000000; }
+        body.bw-mode .metric-card.available { border-left: 4px solid #475569; }
+        body.bw-mode .metric-value { color: #0f172a; }
+        body.bw-mode .metric-card.available .metric-value { color: #1e293b; }
+        body.bw-mode .owner-phone { color: #0f172a; }
+        body.bw-mode .number-badge { background: #000000; color: #ffd700; border: none; }
+        body.bw-mode .buy-ticket-btn { background: #0f172a; color: #ffffff; border: none; box-shadow: 0 6px 0 #020617, 0 12px 25px rgba(0,0,0,0.3); }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.2px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100dvh;
+            overflow: hidden;
+            background-color: var(--dark-bg);
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .app-view {
+            width: 100%;
+            height: 100dvh;
+            max-width: 450px;
+            background: linear-gradient(180deg, rgba(9,3,5,0.65) 0%, rgba(9,3,5,0.92) 100%), url('b.png') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+            overflow: hidden;
+        }
+
+        .app-view::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 15%, rgba(220, 38, 38, 0.12) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Slightly increased Top Header Height */
+        .app-header {
+            width: 100%;
+            background: rgba(15, 5, 8, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-glass);
+            color: var(--text-light);
+            position: relative;
+            padding: calc(8px + env(safe-area-inset-top)) 12px 8px 12px;
+            z-index: 10;
+        }
+
+        .header-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 3;
+        }
+
+        .theme-toggle-btn, .btn-back {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            text-decoration: none;
+            height: 28px;
+            border-radius: 14px;
+            background: #111111;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 0 10px;
+            white-space: nowrap;
+        }
+
+        .btn-back {
+            width: 28px;
+            padding: 0;
+            border-radius: 50%;
+        }
+
+        .theme-toggle-btn:active, .btn-back:active {
+            transform: scale(0.92);
+            background: #222222;
+        }
+
+        .header-center-content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .header-title h2 {
+            font-size: 13px;
+            font-weight: 800;
+            color: inherit;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .live-tracker-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            padding: 3px 7px;
+            border-radius: 20px;
+            backdrop-filter: blur(6px);
+        }
+
+        .pulse-dot {
+            width: 5px;
+            height: 5px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 4px rgba(34, 197, 94, 0.9);
+            animation: pulse-animation 1.5s infinite;
+        }
+
+        @keyframes pulse-animation {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.8); }
+            70% { box-shadow: 0 0 0 3px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        .live-tracker-text {
+            font-size: 8.5px;
+            font-weight: 700;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        /* App Content Area */
+        .app-content {
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
+            z-index: 3;
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: flex-start;
+            scrollbar-width: none;
+        }
+        .app-content::-webkit-scrollbar { display: none; }
+
+        /* Top Description Card */
+        .info-description-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glass);
+            padding: 10px 12px;
+            border-radius: var(--border-radius-md);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--card-shadow);
+            text-align: center;
+        }
+
+        .info-description-card p {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Highlighted 1000Birr Only Styling */
+        .price-highlight {
+            color: #38bdf8;
+            font-weight: 800;
+            font-size: 14.5px;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-md);
+            padding: 9px;
+            text-align: center;
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .metric-card.taken { border-left: 4px solid var(--accent-red); }
+        .metric-card.available { border-left: 4px solid #059669; }
+
+        .metric-value {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-light);
+        }
+
+        .metric-card.available .metric-value { color: #34d399; }
+
+        .metric-label {
+            font-size: 9.5px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            border-left: 3px solid #ffd700;
+            padding-left: 7px;
+        }
+
+        /* 3-Column Horizontal Grid Container */
+        .tickets-3col-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .ticket-grid-box {
+            background: var(--card-bg);
+            border: 1.5px solid rgba(255, 215, 0, 0.3);
+            padding: 8px 6px;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            justify-content: space-between;
+            min-height: 78px;
+        }
+
+        .number-badge {
+            background: linear-gradient(135deg, #7f1d1d 0%, #450a0a 100%);
+            color: #ffd700;
+            font-weight: 800;
+            font-size: 13px;
+            padding: 2px 7px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            margin-bottom: 3px;
+        }
+
+        .owner-phone { 
+            font-size: 11.5px; 
+            font-weight: 800; 
+            color: var(--text-light); 
+        }
+        
+        .owner-meta { 
+            font-size: 9.5px; 
+            color: var(--text-muted); 
+            margin-top: 2px; 
+        }
+
+        /* 3D Animated Light Blue Buy Ticket Button */
+        .buy-ticket-btn {
+            width: 100%;
+            height: 48px;
+            background: var(--light-blue-gradient);
+            color: #0f172a;
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            border-radius: 14px;
+            font-size: 13.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: var(--light-blue-shadow);
+            transition: all 0.1s ease-in-out;
+            margin-top: 260px;
+            transform: translateY(0);
+        }
+
+        .buy-ticket-btn:hover {
+            filter: brightness(1.05);
+        }
+
+        .buy-ticket-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #0369a1, 0 6px 15px rgba(2, 132, 199, 0.3);
+        }
+
+        .loading-text {
+            text-align: center;
+            font-size: 11.5px;
+            color: var(--text-muted);
+            padding: 10px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1.5px dashed rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-view">
+        
+        <header class="app-header">
+            <div class="header-top-bar">
+                <button class="btn-back" onclick="window.location.href='byd.html'" aria-label="Back">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                
+                <div class="header-center-content">
+                    <div class="header-title">
+                        <h2>BYD Allocation Portal</h2>
+                    </div>
+                    <div class="live-tracker-badge">
+                        <span class="pulse-dot"></span>
+                        <span class="live-tracker-text">Live Active</span>
+                    </div>
+                </div>
+
+                <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeToggleBtn">
+                    <span>🌓 B&W</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="app-content">
+            
+            <div class="section-label">Recent 3 Taken Tickets</div>
+
+            <div id="loadingIndicator" class="loading-text">Fetching latest tickets...</div>
+
+            <!-- 3-Column Grid Container -->
+            <div id="lastTicketsContainer" class="tickets-3col-grid"></div>
+
+            <!-- Description Card with Bold & Enlarged 1000Birr Only -->
+            <div class="info-description-card">
+                <p>Grab your lucky ticket for <span class="price-highlight">1000Birr Only</span>!</p>
+            </div>
+
+            <!-- Summary Counters -->
+            <div class="metrics-grid">
+                <div class="metric-card taken">
+                    <div class="metric-value" id="countTaken">0</div>
+                    <div class="metric-label">Taken Numbers</div>
+                </div>
+                <div class="metric-card available">
+                    <div class="metric-value" id="countAvailable">0</div>
+                    <div class="metric-label">Available Numbers</div>
+                </div>
+            </div>
+
+            <!-- Buy Ticket Button with 3D Light Blue Animation -->
+            <button class="buy-ticket-btn" onclick="window.location.href='car3.html'">
+                <span>Buy Ticket Now</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+
+        </div>
+
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('bw-mode');
+            const isBw = document.body.classList.contains('bw-mode');
+            document.getElementById('themeToggleBtn').innerHTML = isBw ? '<span>🎨 Color</span>' : '<span>🌓 B&W</span>';
+            localStorage.setItem('app_theme_mode', isBw ? 'bw' : 'dark');
+        }
+
+        if(localStorage.getItem('app_theme_mode') === 'bw') {
+            document.body.classList.add('bw-mode');
+            document.getElementById('themeToggleBtn').innerHTML = '<span>🎨 Color</span>';
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCRHoIZf1ZPR9m3YYTv-I9CfwyGqsSOMWo",
+            authDomain: "birrgo-fdf7e.firebaseapp.com",
+            databaseURL: "https://birrgo-fdf7e-default-rtdb.firebaseio.com",
+            projectId: "birrgo-fdf7e",
+            storageBucket: "birrgo-fdf7e.firebasestorage.app",
+            messagingSenderId: "2317445154",
+            appId: "1:2317445154:web:4275cbb0f46b28f64f827b"
+        };
+
+        const MAX_TICKET_NUMBER = 3500;
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchLatestTicketsData();
+        });
+
+        function fetchLatestTicketsData() {
+            const ticketsRef = ref(db, 'new_byd/tickets');
+            
+            onValue(ticketsRef, (snapshot) => {
+                document.getElementById('loadingIndicator').style.display = 'none';
+                const data = snapshot.val() || {};
+
+                const takenList = [];
+                
+                Object.values(data).forEach(t => {
+                    if (t) {
+                        const st = (t.status || '').toLowerCase().trim();
+                        if (st === 'approved' || st === 'pending' || st === '') {
+                            const rawNum = t.ticketNum !== undefined ? t.ticketNum : (t.pos !== undefined ? t.pos : (t.ticket !== undefined ? t.ticket : null));
+                            if (rawNum !== null && !isNaN(rawNum)) {
+                                takenList.push({
+                                    ticketNum: parseInt(rawNum, 10),
+                                    phone: t.phone || t.cardSequence || t.user_phone || "0900000000",
+                                    location: t.location || t.loc || "Addis Ababa"
+                                });
+                            }
+                        }
+                    }
+                });
+
+                const takenCount = takenList.length;
+                const availableCount = (MAX_TICKET_NUMBER + 1) - takenCount;
+                document.getElementById('countTaken').innerText = takenCount;
+                document.getElementById('countAvailable').innerText = availableCount;
+
+                const container = document.getElementById('lastTicketsContainer');
+                container.innerHTML = '';
+
+                if (takenList.length > 0) {
+                    takenList.sort((a, b) => b.ticketNum - a.ticketNum);
+                    
+                    const top3 = takenList.slice(0, 3);
+                    
+                    top3.forEach(latest => {
+                        const paddedNum = latest.ticketNum.toString().padStart(4, '0');
+                        const rawPhone = latest.phone;
+                        const hiddenPhone = rawPhone.length >= 7 ? rawPhone.substring(0, 5) + "••" : rawPhone;
+
+                        const ticketBox = document.createElement('div');
+                        ticketBox.className = 'ticket-grid-box';
+                        ticketBox.innerHTML = `
+                            <div class="number-badge">#${paddedNum}</div>
+                            <div class="owner-phone">👤 ${hiddenPhone}</div>
+                            <div class="owner-meta">📍 ${latest.location}</div>
+                        `;
+                        container.appendChild(ticketBox);
+                    });
+
+                    for (let i = top3.length; i < 3; i++) {
+                        const emptyBox = document.createElement('div');
+                        emptyBox.className = 'ticket-grid-box';
+                        emptyBox.style.opacity = '0.4';
+                        emptyBox.innerHTML = `
+                            <div class="number-badge" style="background:#334155;color:#94a3b8;">#----</div>
+                            <div class="owner-phone" style="font-size:10.5px;">Available</div>
+                            <div class="owner-meta">Open Slot</div>
+                        `;
+                        container.appendChild(emptyBox);
+                    }
+
+                } else {
+                    container.style.display = 'block';
+                    container.innerHTML = `<div class="loading-text">No taken tickets found yet.</div>`;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

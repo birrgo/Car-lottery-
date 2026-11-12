@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>BirrGo — Admin Payment & Configuration Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #000000;
+            --bg-shell: #0a0a0c;
+            --bg-card: #141418;
+            --bg-subtle: #1e1e24;
+            --bg-nav: rgba(10, 10, 12, 0.92);
+            --border: #272730;
+            --border-focus: #f87171;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-tertiary: #6b7280;
+            --brand: #dc2626;
+            --brand-hover: #b91c1c;
+            --brand-soft: rgba(220, 38, 38, 0.15);
+            --emerald: #10b981;
+            --emerald-soft: rgba(16, 185, 129, 0.15);
+            --danger: #ef4444;
+            --danger-soft: rgba(239, 68, 68, 0.15);
+            --radius-lg: 14px;
+            --radius-md: 10px;
+        }
+
+        [data-theme="light"] {
+            --bg-body: #f3f4f6;
+            --bg-shell: #ffffff;
+            --bg-card: #f9fafb;
+            --bg-subtle: #f3f4f6;
+            --bg-nav: rgba(255, 255, 255, 0.92);
+            --border: #e5e7eb;
+            --border-focus: #111827;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --text-tertiary: #9ca3af;
+            --brand: #991b1b;
+            --brand-hover: #7f1d1d;
+            --brand-soft: #fef2f2;
+            --emerald: #059669;
+            --emerald-soft: #ecfdf5;
+            --danger: #dc2626;
+            --danger-soft: #fef2f2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .app-shell {
+            width: 100%;
+            max-width: 460px;
+            height: 100vh;
+            height: 100dvh;
+            background: var(--bg-shell);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            border-left: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: calc(12px + env(safe-area-inset-top, 0px)) 18px 12px;
+            background: var(--bg-nav);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .nav-title {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .main-body {
+            padding: 16px 18px calc(24px + env(safe-area-inset-bottom, 0px));
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+
+        .main-body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .field-label {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .text-input, .select-input {
+            width: 100%;
+            height: 42px;
+            padding: 0 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 13px;
+            color: var(--text-primary);
+            background: var(--bg-shell);
+            outline: none;
+        }
+
+        .text-input:focus, .select-input:focus {
+            border-color: var(--border-focus);
+        }
+
+        .btn-primary {
+            width: 100%;
+            height: 44px;
+            border: none;
+            border-radius: var(--radius-md);
+            background: var(--brand);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .btn-primary:active {
+            background: var(--brand-hover);
+        }
+
+        .account-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .account-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            background: var(--bg-shell);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+        }
+
+        .account-info div:first-child {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .account-info div:last-child {
+            font-size: 11.5px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
+        }
+
+        .btn-danger-sm {
+            padding: 6px 10px;
+            background: var(--danger-soft);
+            color: var(--danger);
+            border: none;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-shell">
+        <header class="top-nav">
+            <button class="icon-btn" onclick="window.location.href='index.html'">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <span class="nav-title">Admin: Settings & Payments</span>
+            <div style="width: 36px;"></div>
+        </header>
+
+        <main class="main-body">
+            <!-- Lottery Parameters Configuration Card -->
+            <section class="card">
+                <h3 class="card-title">Lottery Global Settings</h3>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="field-label">Total Ticket Limit</label>
+                        <input type="number" id="totalTicketsInput" class="text-input" placeholder="e.g. 10000" value="10000">
+                    </div>
+                    <div class="form-group">
+                        <label class="field-label">Ticket Price (Birr)</label>
+                        <input type="number" id="ticketPriceInput" class="text-input" placeholder="e.g. 3000" value="3000">
+                    </div>
+                </div>
+
+                <button class="btn-primary" id="saveConfigBtn">Save Global Settings</button>
+            </section>
+
+            <!-- Add / Update Payment Account Card -->
+            <section class="card">
+                <h3 class="card-title">Add / Update Payment Account</h3>
+                
+                <div class="form-group">
+                    <label class="field-label">Provider Key ID</label>
+                    <select id="accountKeySelect" class="select-input">
+                        <option value="cbe">Commercial Bank of Ethiopia (cbe)</option>
+                        <option value="telebirr">Telebirr (telebirr)</option>
+                        <option value="boa">Bank of Abyssinia (boa)</option>
+                        <option value="cbebirr">CBE Birr (cbebirr)</option>
+                        <option value="mpesa">M-Pesa (mpesa)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="field-label">Display Name</label>
+                    <input type="text" id="accountName" class="text-input" placeholder="e.g. Commercial Bank of Ethiopia">
+                </div>
+
+                <div class="form-group">
+                    <label class="field-label">Account Number / Phone</label>
+                    <input type="text" id="accountNumber" class="text-input" placeholder="e.g. 1000123456789">
+                </div>
+
+                <div class="form-group">
+                    <label class="field-label">Account Holder Name</label>
+                    <input type="text" id="accountHolder" class="text-input" placeholder="e.g. BirrGo Trading PLC" value="BirrGo Trading PLC">
+                </div>
+
+                <button class="btn-primary" id="saveAccountBtn">Save / Update Account</button>
+            </section>
+
+            <!-- Active Accounts List Card -->
+            <section class="card">
+                <h3 class="card-title">Active Database Accounts</h3>
+                <div class="account-list" id="activeAccountsContainer">
+                    <p style="font-size: 12px; color: var(--text-secondary); text-align: center; padding: 10px;">Loading accounts...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Firebase Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue, set, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            databaseURL: "https://byd-87f69-default-rtdb.firebaseio.com"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const keySelect = document.getElementById('accountKeySelect');
+        const nameInput = document.getElementById('accountName');
+        const numberInput = document.getElementById('accountNumber');
+        const holderInput = document.getElementById('accountHolder');
+        const accountsContainer = document.getElementById('activeAccountsContainer');
+        
+        const totalTicketsInput = document.getElementById('totalTicketsInput');
+        const ticketPriceInput = document.getElementById('ticketPriceInput');
+
+        // Auto-fill display name when dropdown option changes
+        keySelect.addEventListener('change', () => {
+            const labels = {
+                cbe: 'Commercial Bank of Ethiopia',
+                telebirr: 'Telebirr',
+                boa: 'Bank of Abyssinia',
+                cbebirr: 'CBE Birr',
+                mpesa: 'M-Pesa'
+            };
+            nameInput.value = labels[keySelect.value] || '';
+        });
+        keySelect.dispatchEvent(new Event('change'));
+
+        // Load existing global settings configuration from Firebase
+        const configRef = ref(db, 'new_byd_settings/config');
+        onValue(configRef, (snapshot) => {
+            if (snapshot.exists()) {
+                const configData = snapshot.val();
+                if (configData.totalTickets !== undefined) totalTicketsInput.value = configData.totalTickets;
+                if (configData.ticketPrice !== undefined) ticketPriceInput.value = configData.ticketPrice;
+            }
+        }, { onlyOnce: true });
+
+        // Save Global Configuration handler
+        document.getElementById('saveConfigBtn').addEventListener('click', async () => {
+            const totalTickets = parseInt(totalTicketsInput.value) || 10000;
+            const ticketPrice = parseFloat(ticketPriceInput.value) || 3000;
+
+            try {
+                await set(ref(db, 'new_byd_settings/config'), {
+                    totalTickets: totalTickets,
+                    ticketPrice: ticketPrice,
+                    updatedAt: Date.now()
+                });
+                alert("Global lottery settings updated successfully!");
+            } catch (err) {
+                console.error("Error saving global config:", err);
+                alert("Failed to save global configuration.");
+            }
+        });
+
+        // Listen for Realtime Database changes under accounts
+        const accountsRef = ref(db, 'new_byd_settings/accounts');
+        onValue(accountsRef, (snapshot) => {
+            accountsContainer.innerHTML = '';
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                Object.keys(data).forEach(key => {
+                    const acc = data[key];
+                    if (acc && (acc.number || acc.account)) {
+                        const item = document.createElement('div');
+                        item.className = 'account-item';
+                        item.innerHTML = `
+                            <div class="account-info">
+                                <div>${acc.name || key.toUpperCase()}</div>
+                                <div>${acc.number || acc.account} (${acc.holder_name || 'N/A'})</div>
+                            </div>
+                            <button class="btn-danger-sm" onclick="deleteAccount('${key}')">Remove</button>
+                        `;
+                        accountsContainer.appendChild(item);
+                    }
+                });
+            } else {
+                accountsContainer.innerHTML = `<p style="font-size: 12px; color: var(--text-secondary); text-align: center; padding: 10px;">No payment accounts registered.</p>`;
+            }
+        });
+
+        // Save / Update Account handler
+        document.getElementById('saveAccountBtn').addEventListener('click', async () => {
+            const key = keySelect.value;
+            const name = nameInput.value.trim();
+            const number = numberInput.value.trim();
+            const holder = holderInput.value.trim();
+
+            if (!number) {
+                alert("Please enter a valid account number or phone.");
+                return;
+            }
+
+            try {
+                await set(ref(db, `new_byd_settings/accounts/${key}`), {
+                    name: name,
+                    number: number,
+                    holder_name: holder
+                });
+                alert("Account saved successfully!");
+                numberInput.value = '';
+            } catch (err) {
+                console.error("Error saving account:", err);
+                alert("Failed to save account.");
+            }
+        });
+
+        // Global delete function attached to window
+        window.deleteAccount = async function(key) {
+            if (confirm(`Are you sure you want to remove the account configuration for ${key.toUpperCase()}?`)) {
+                try {
+                    await remove(ref(db, `new_byd_settings/accounts/${key}`));
+                } catch (err) {
+                    console.error("Error removing account:", err);
+                    alert("Failed to delete account.");
+                }
+            }
+        };
+    </script>
+</body>
+</html>

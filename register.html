@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>BYD Raffle - Create Account</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #000000;
+            --bg-shell: #0a0a0c;
+            --bg-card: #141418;
+            --bg-nav: rgba(10, 10, 12, 0.92);
+            --border: #272730;
+            --border-focus: #f87171;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-tertiary: #6b7280;
+            --brand: #dc2626;
+            --brand-hover: #b91c1c;
+            --brand-soft: rgba(220, 38, 38, 0.15);
+            --radius-xl: 20px;
+            --radius-lg: 14px;
+            --radius-md: 10px;
+        }
+
+        [data-theme="light"] {
+            --bg-body: #f3f4f6;
+            --bg-shell: #ffffff;
+            --bg-card: #f9fafb;
+            --bg-nav: rgba(255, 255, 255, 0.92);
+            --border: #e5e7eb;
+            --border-focus: #111827;
+            --text-primary: #111827;
+            --text-secondary: #6b7280;
+            --text-tertiary: #9ca3af;
+            --brand: #991b1b;
+            --brand-hover: #7f1d1d;
+            --brand-soft: #fef2f2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.2s, color 0.2s;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app-shell {
+            width: 100%;
+            max-width: 460px;
+            height: 100vh;
+            height: 100dvh;
+            background: var(--bg-shell);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            border-left: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: calc(12px + env(safe-area-inset-top, 0px)) 18px 12px;
+            background: var(--bg-nav);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            z-index: 20;
+        }
+
+        .nav-title {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .main-body {
+            padding: 16px 18px calc(96px + env(safe-area-inset-bottom, 0px));
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            flex: 1;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+
+        .main-body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .intro-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 14px 16px;
+        }
+
+        .campaign-tag {
+            display: inline-block;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--brand);
+            background: var(--brand-soft);
+            padding: 2px 8px;
+            border-radius: 99px;
+            margin-bottom: 6px;
+        }
+
+        .intro-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .intro-sub {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .field-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .text-input, .select-input {
+            width: 100%;
+            height: 44px;
+            padding: 0 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 13.5px;
+            color: var(--text-primary);
+            background: var(--bg-card);
+            outline: none;
+        }
+
+        .text-input:focus, .select-input:focus {
+            border-color: var(--border-focus);
+        }
+
+        .row-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .footer-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 12px 18px calc(12px + env(safe-area-inset-bottom, 0px));
+            background: var(--bg-nav);
+            backdrop-filter: blur(16px);
+            border-top: 1px solid var(--border);
+            z-index: 30;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            height: 46px;
+            border: none;
+            border-radius: var(--radius-md);
+            background: var(--brand);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary:disabled {
+            background: var(--border);
+            color: var(--text-tertiary);
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            height: 38px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 12.5px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .btn-secondary:hover {
+            color: var(--text-primary);
+            border-color: var(--text-secondary);
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.72);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 100;
+        }
+
+        .modal-backdrop.active {
+            display: flex;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 340px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .modal-title {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .modal-desc {
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .btn-modal-solid {
+            width: 100%;
+            height: 40px;
+            border: none;
+            background: var(--brand);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .btn-modal-solid:disabled {
+            background: var(--border);
+            color: var(--text-tertiary);
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-shell">
+        <header class="top-nav">
+            <span class="nav-title">BYD Song Plus Raffle</span>
+            <button class="icon-btn" id="themeToggleBtn" aria-label="Toggle Theme">
+                <svg id="sunIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg id="moonIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </header>
+
+        <main class="main-body">
+            <section class="intro-card">
+                <span class="campaign-tag"></span>
+                <h1 class="intro-title">Participant Registration</h1>
+                <p class="intro-sub">Enter your details once to create your personal raffle account. Your profile will remain saved until you log out.</p>
+            </section>
+
+            <section class="form-section">
+                <label class="field-label" for="regFullName">1. Full Name</label>
+                <input type="text" id="regFullName" class="text-input" placeholder="e.g. Abebe Kebede">
+            </section>
+
+            <section class="form-section">
+                <label class="field-label" for="regPhone">Phone Number</label>
+                <input type="tel" id="regPhone" class="text-input" placeholder="e.g. 0911223344">
+            </section>
+
+            <div class="row-2-col">
+                <section class="form-section">
+                    <label class="field-label" for="regAge">2. Age</label>
+                    <input type="number" id="regAge" class="text-input" placeholder="e.g. 28" min="18" max="120">
+                </section>
+
+                <section class="form-section">
+                    <label class="field-label" for="regSex">3. Sex</label>
+                    <select id="regSex" class="select-input">
+                        <option value="" disabled selected>Select</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </section>
+            </div>
+
+            <section class="form-section">
+                <label class="field-label" for="regCity">4. City</label>
+                <input type="text" id="regCity" class="text-input" placeholder="e.g. Addis Ababa">
+            </section>
+        </main>
+
+        <footer class="footer-bar">
+            <button class="btn-primary" id="saveProfileBtn" disabled>Save & Continue to Numbers →</button>
+            <button class="btn-secondary" id="alreadyRegisteredBtn">Already Registered? Enter Phone</button>
+        </footer>
+    </div>
+
+    <!-- Error/Notice Modal -->
+    <div class="modal-backdrop" id="errorModal">
+        <div class="modal-box">
+            <h3 class="modal-title" id="modalTitleText">Notice</h3>
+            <p class="modal-desc" id="errorMessageText">Please fill in all fields correctly.</p>
+            <button class="btn-modal-solid" id="closeErrorModalBtn">OK</button>
+        </div>
+    </div>
+
+    <!-- Login by Phone Modal -->
+    <div class="modal-backdrop" id="loginModal">
+        <div class="modal-box">
+            <h3 class="modal-title">Already Registered</h3>
+            <p class="modal-desc">Enter your registered phone number to sign in directly.</p>
+            <div class="form-section">
+                <input type="tel" id="loginPhoneInput" class="text-input" placeholder="e.g. 0911223344">
+            </div>
+            <button class="btn-modal-solid" id="submitLoginBtn" disabled>Continue →</button>
+            <button class="btn-secondary" id="cancelLoginBtn">Cancel</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, update, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Theme Management
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+            localStorage.setItem('byd_theme', theme);
+        }
+        applyTheme(localStorage.getItem('byd_theme') || 'dark');
+
+        themeToggleBtn.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+            applyTheme(current === 'light' ? 'dark' : 'light');
+        });
+
+        // Firebase Initialization
+        const firebaseConfig = {
+            databaseURL: "https://byd-87f69-default-rtdb.firebaseio.com"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        function normalizePhoneNumber(phoneStr) {
+            let digits = (phoneStr || '').replace(/\D/g, '');
+            if (digits.startsWith('0') && digits.length === 10) {
+                digits = '251' + digits.substring(1);
+            } else if (digits.length === 9 && (digits.startsWith('9') || digits.startsWith('7'))) {
+                digits = '251' + digits;
+            }
+            return digits;
+        }
+
+        function showError(msg, title = "Notice") {
+            document.getElementById('modalTitleText').innerText = title;
+            document.getElementById('errorMessageText').innerText = msg;
+            document.getElementById('errorModal').classList.add('active');
+        }
+
+        document.getElementById('closeErrorModalBtn').addEventListener('click', () => {
+            document.getElementById('errorModal').classList.remove('active');
+        });
+
+        // Auto-redirect if user already has an active saved profile
+        document.addEventListener('DOMContentLoaded', async () => {
+            const savedProfileRaw = localStorage.getItem('byd_user_profile');
+            if (savedProfileRaw) {
+                try {
+                    const parsed = JSON.parse(savedProfileRaw);
+                    if (parsed && parsed.cardSequence && parsed.fullName && parsed.city) {
+                        window.location.href = "index.html";
+                        return;
+                    }
+                } catch (e) {
+                    localStorage.removeItem('byd_user_profile');
+                }
+            }
+        });
+
+        // Form Validation
+        const nameEl = document.getElementById('regFullName');
+        const phoneEl = document.getElementById('regPhone');
+        const ageEl = document.getElementById('regAge');
+        const sexEl = document.getElementById('regSex');
+        const cityEl = document.getElementById('regCity');
+        const saveBtn = document.getElementById('saveProfileBtn');
+
+        function validateForm() {
+            const nameValid = nameEl.value.trim().length >= 2;
+            const phoneDigits = normalizePhoneNumber(phoneEl.value);
+            const phoneValid = phoneDigits.length >= 9;
+            const ageVal = parseInt(ageEl.value);
+            const ageValid = !isNaN(ageVal) && ageVal >= 18 && ageVal <= 120;
+            const sexValid = sexEl.value !== "";
+            const cityValid = cityEl.value.trim().length >= 2;
+
+            saveBtn.disabled = !(nameValid && phoneValid && ageValid && sexValid && cityValid);
+        }
+
+        [nameEl, phoneEl, ageEl, sexEl, cityEl].forEach(el => {
+            el.addEventListener('input', validateForm);
+            el.addEventListener('change', validateForm);
+        });
+
+        // Save Profile to Firebase & Local Session
+        saveBtn.addEventListener('click', async () => {
+            const fullName = nameEl.value.trim();
+            const rawPhone = phoneEl.value.trim();
+            const normalizedPhone = normalizePhoneNumber(rawPhone);
+            const age = parseInt(ageEl.value);
+            const sex = sexEl.value;
+            const city = cityEl.value.trim();
+
+            if (age < 18) {
+                showError("You must be at least 18 years old to participate.");
+                return;
+            }
+
+            saveBtn.disabled = true;
+            saveBtn.innerText = "Saving Account...";
+
+            try {
+                const userRef = ref(db, `users/${normalizedPhone}`);
+                const snapshot = await get(userRef);
+
+                const existingData = snapshot.exists() ? snapshot.val() : {};
+
+                const profilePayload = {
+                    fullName: fullName,
+                    phone: rawPhone,
+                    cardSequence: normalizedPhone,
+                    age: age,
+                    sex: sex,
+                    city: city,
+                    country: existingData.country || "Ethiopia",
+                    updatedAt: new Date().toISOString()
+                };
+
+                await update(userRef, profilePayload);
+
+                localStorage.setItem('byd_user_profile', JSON.stringify(profilePayload));
+                localStorage.setItem('auth_session_phone', rawPhone);
+                sessionStorage.setItem('auth_session_phone', rawPhone);
+
+                window.location.href = "index.html";
+            } catch (err) {
+                console.error("Account Save Error:", err);
+                showError("Failed to save account. Check your connection and try again.");
+                saveBtn.disabled = false;
+                saveBtn.innerText = "Save & Continue to Numbers →";
+            }
+        });
+
+        // Already Registered Modal Handlers
+        const alreadyRegisteredBtn = document.getElementById('alreadyRegisteredBtn');
+        const loginModal = document.getElementById('loginModal');
+        const cancelLoginBtn = document.getElementById('cancelLoginBtn');
+        const loginPhoneInput = document.getElementById('loginPhoneInput');
+        const submitLoginBtn = document.getElementById('submitLoginBtn');
+
+        alreadyRegisteredBtn.addEventListener('click', () => {
+            loginPhoneInput.value = '';
+            submitLoginBtn.disabled = true;
+            loginModal.classList.add('active');
+            loginPhoneInput.focus();
+        });
+
+        cancelLoginBtn.addEventListener('click', () => {
+            loginModal.classList.remove('active');
+        });
+
+        loginPhoneInput.addEventListener('input', () => {
+            const digits = normalizePhoneNumber(loginPhoneInput.value);
+            submitLoginBtn.disabled = digits.length < 9;
+        });
+
+        submitLoginBtn.addEventListener('click', async () => {
+            const rawPhone = loginPhoneInput.value.trim();
+            const normalizedPhone = normalizePhoneNumber(rawPhone);
+
+            if (normalizedPhone.length < 9) {
+                showError("Please enter a valid phone number.");
+                return;
+            }
+
+            submitLoginBtn.disabled = true;
+            submitLoginBtn.innerText = "Checking...";
+
+            try {
+                const userRef = ref(db, `users/${normalizedPhone}`);
+                const snapshot = await get(userRef);
+
+                if (!snapshot.exists()) {
+                    showError("No account found with this phone number. Please register first.", "Account Not Found");
+                    submitLoginBtn.disabled = false;
+                    submitLoginBtn.innerText = "Continue →";
+                    return;
+                }
+
+                const userData = snapshot.val();
+                
+                // Ensure basic profile structure exists
+                const profilePayload = {
+                    fullName: userData.fullName || "User",
+                    phone: userData.phone || rawPhone,
+                    cardSequence: normalizedPhone,
+                    age: userData.age || 18,
+                    sex: userData.sex || "Male",
+                    city: userData.city || "Addis Ababa",
+                    country: userData.country || "Ethiopia",
+                    updatedAt: userData.updatedAt || new Date().toISOString()
+                };
+
+                localStorage.setItem('byd_user_profile', JSON.stringify(profilePayload));
+                localStorage.setItem('auth_session_phone', rawPhone);
+                sessionStorage.setItem('auth_session_phone', rawPhone);
+
+                window.location.href = "index.html";
+            } catch (err) {
+                console.error("Login Error:", err);
+                showError("Failed to sign in. Check your connection and try again.");
+                submitLoginBtn.disabled = false;
+                submitLoginBtn.innerText = "Continue →";
+            }
+        });
+    </script>
+</body>
+</html>
