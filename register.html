@@ -2,245 +2,403 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BYD Raffle - Create Account</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-body: #000000;
-            --bg-shell: #0a0a0c;
-            --bg-card: #141418;
-            --bg-nav: rgba(10, 10, 12, 0.92);
-            --border: #272730;
-            --border-focus: #f87171;
-            --text-primary: #f9fafb;
-            --text-secondary: #9ca3af;
-            --text-tertiary: #6b7280;
-            --brand: #dc2626;
-            --brand-hover: #b91c1c;
-            --brand-soft: rgba(220, 38, 38, 0.15);
-            --radius-xl: 20px;
-            --radius-lg: 14px;
-            --radius-md: 10px;
-        }
-
-        [data-theme="light"] {
-            --bg-body: #f3f4f6;
-            --bg-shell: #ffffff;
-            --bg-card: #f9fafb;
-            --bg-nav: rgba(255, 255, 255, 0.92);
-            --border: #e5e7eb;
-            --border-focus: #111827;
-            --text-primary: #111827;
-            --text-secondary: #6b7280;
-            --text-tertiary: #9ca3af;
-            --brand: #991b1b;
-            --brand-hover: #7f1d1d;
-            --brand-soft: #fef2f2;
-        }
-
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-primary);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: #050505;
+            color: #ffffff;
             min-height: 100vh;
-            overflow: hidden;
-            transition: background-color 0.2s, color 0.2s;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .app-shell {
-            width: 100%;
-            max-width: 460px;
-            height: 100vh;
-            height: 100dvh;
-            background: var(--bg-shell);
             display: flex;
             flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            border-left: 1px solid var(--border);
-            border-right: 1px solid var(--border);
-        }
-
-        .top-nav {
-            display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: calc(12px + env(safe-area-inset-top, 0px)) 18px 12px;
-            background: var(--bg-nav);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            flex-shrink: 0;
-            z-index: 20;
         }
 
-        .nav-title {
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
+        /* Background image container */
+        .hero-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('b.png') no-repeat center center/cover;
+            z-index: -2;
         }
 
-        .icon-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            color: var(--text-primary);
-            display: inline-flex;
+        /* Overlay with subtle blur */
+        .hero-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.28) 0%, rgba(5,5,5,0.72) 100%);
+            backdrop-filter: blur(1.5px);
+            -webkit-backdrop-filter: blur(1.5px);
+            z-index: -1;
+        }
+
+        /* Header / Logo */
+        header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            cursor: pointer;
+            padding: 20px 8%;
+            width: 100%;
+            z-index: 10;
         }
 
-        .main-body {
-            padding: 16px 18px calc(96px + env(safe-area-inset-bottom, 0px));
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #ff1a1a;
+        }
+
+        /* Main Content Section */
+        main {
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            flex: 1;
-            overflow-y: auto;
-            scrollbar-width: none;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px 20px 30px 20px;
+            flex-grow: 1;
+            z-index: 10;
+            max-width: 650px;
+            margin: 0 auto;
+            width: 100%;
+            gap: 12px;
         }
 
-        .main-body::-webkit-scrollbar {
-            display: none;
+        /* Page Title */
+        .page-title {
+            text-align: center;
+            margin-bottom: 5px;
+            width: 100%;
         }
 
+        .page-title h1 {
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            font-weight: 800;
+            margin-bottom: 4px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+        }
+
+        .page-title h1 span {
+            background: linear-gradient(90deg, #ff1a1a, #ff7b7b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-title p {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #e0e0e0;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Bold Glassmorphism Card */
         .intro-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 14px 16px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(15, 15, 15, 0.45) 100%);
+            border: 1.5px solid rgba(255, 255, 255, 0.22);
+            border-top: 1.5px solid rgba(255, 255, 255, 0.35);
+            border-left: 4px solid #ff1a1a;
+            border-radius: 13px;
+            padding: 13px 16px;
+            box-shadow: 
+                0 10px 28px rgba(0, 0, 0, 0.55),
+                inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            width: 100%;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .campaign-tag {
             display: inline-block;
-            font-size: 10.5px;
-            font-weight: 600;
-            color: var(--brand);
-            background: var(--brand-soft);
+            font-size: 9px;
+            font-weight: 800;
+            color: #ff1a1a;
+            background: rgba(255, 26, 26, 0.18);
             padding: 2px 8px;
             border-radius: 99px;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
+            border: 1px solid rgba(255, 26, 26, 0.35);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .intro-title {
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .intro-sub {
-            font-size: 12px;
-            color: var(--text-secondary);
+        .intro-card p {
+            font-size: 0.8rem;
+            color: #ffffff;
             line-height: 1.4;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
         }
 
         .form-section {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
+            width: 100%;
         }
 
         .field-label {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-primary);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
         }
 
-        .text-input, .select-input {
+        /* Bold Glass Input & Dropdown Boxes (Clear view, subtle glass shine) */
+        .text-input, .custom-select-trigger {
             width: 100%;
-            height: 44px;
+            height: 46px;
             padding: 0 14px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
+            border: 1.5px solid rgba(255, 255, 255, 0.22);
+            border-top: 1.5px solid rgba(255, 255, 255, 0.36);
+            border-radius: 11px;
             font-family: inherit;
-            font-size: 13.5px;
-            color: var(--text-primary);
-            background: var(--bg-card);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(12, 12, 12, 0.42) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 
+                0 6px 18px rgba(0, 0, 0, 0.45),
+                inset 0 1px 1px rgba(255, 255, 255, 0.22);
             outline: none;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
         }
 
-        .text-input:focus, .select-input:focus {
-            border-color: var(--border-focus);
+        .custom-select-trigger.placeholder {
+            color: rgba(255, 255, 255, 0.55);
+            font-weight: 500;
+        }
+
+        .custom-select-trigger::after {
+            content: "";
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid #ff1a1a;
+        }
+
+        .text-input::placeholder {
+            color: rgba(255, 255, 255, 0.55);
+            font-weight: 500;
+        }
+
+        .text-input:focus, .custom-select-trigger:hover {
+            border-color: rgba(255, 26, 26, 0.75);
+            border-top-color: rgba(255, 100, 100, 0.85);
+            box-shadow: 
+                0 6px 20px rgba(255, 26, 26, 0.22),
+                inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.12) 0%, rgba(18, 18, 18, 0.58) 100%);
         }
 
         .row-2-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 12px;
+            width: 100%;
         }
 
-        .footer-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 12px 18px calc(12px + env(safe-area-inset-bottom, 0px));
-            background: var(--bg-nav);
-            backdrop-filter: blur(16px);
-            border-top: 1px solid var(--border);
-            z-index: 30;
+        /* Custom Dark Glass Dropdown Modal Picker */
+        .picker-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 200;
+        }
+
+        .picker-modal.active {
+            display: flex;
+        }
+
+        .picker-content {
+            width: 100%;
+            max-width: 340px;
+            max-height: 75vh;
+            background: linear-gradient(145deg, rgba(30, 30, 30, 0.78) 0%, rgba(12, 12, 12, 0.88) 100%);
+            border: 1.5px solid rgba(255, 255, 255, 0.22);
+            border-top: 1.5px solid rgba(255, 255, 255, 0.38);
+            border-radius: 16px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            overflow: hidden;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 
+                0 20px 45px rgba(0, 0, 0, 0.85),
+                inset 0 1px 1px rgba(255, 255, 255, 0.25);
         }
 
-        .btn-primary {
-            width: 100%;
-            height: 46px;
-            border: none;
-            border-radius: var(--radius-md);
-            background: var(--brand);
+        .picker-header {
+            padding: 15px 16px;
+            font-size: 1rem;
+            font-weight: 800;
             color: #ffffff;
-            font-family: inherit;
-            font-size: 13.5px;
-            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .picker-close {
+            background: none;
+            border: none;
+            color: #ff1a1a;
+            font-size: 1.3rem;
+            font-weight: bold;
             cursor: pointer;
+            line-height: 1;
+        }
+
+        .picker-list {
+            overflow-y: auto;
+            padding: 8px;
+            scrollbar-width: thin;
+            scrollbar-color: #ff1a1a rgba(0,0,0,0.2);
+        }
+
+        .picker-item {
+            padding: 12px 16px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #e8e8e8;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .picker-item:hover, .picker-item.selected {
+            background: rgba(255, 26, 26, 0.22);
+            border: 1px solid rgba(255, 26, 26, 0.35);
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        /* Footer Action Container */
+        .footer-bar {
+            width: 100%;
+            padding: 15px 20px 25px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        /* Primary Button */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            color: #000000;
+            font-size: 1rem;
+            font-weight: 800;
+            padding: 16px 0;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 14px;
+            text-decoration: none;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            
+            transform-style: preserve-3d;
+            box-shadow: 
+                0 4px 6px rgba(0, 0, 0, 0.3),
+                0 10px 25px rgba(255, 255, 255, 0.15),
+                inset 0 2px 3px rgba(255, 255, 255, 1),
+                inset 0 -5px 12px rgba(0, 0, 0, 0.15);
+            
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 
+                0 8px 15px rgba(0, 0, 0, 0.4),
+                0 20px 35px rgba(255, 255, 255, 0.25),
+                inset 0 2px 4px rgba(255, 255, 255, 1),
+                inset 0 -6px 15px rgba(0, 0, 0, 0.2);
         }
 
         .btn-primary:disabled {
-            background: var(--border);
-            color: var(--text-tertiary);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
+            border: 1.5px solid rgba(255, 255, 255, 0.18);
+            color: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            box-shadow: none;
             cursor: not-allowed;
+            transform: none;
         }
 
         .btn-secondary {
             width: 100%;
-            height: 38px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            background: var(--bg-card);
-            color: var(--text-secondary);
+            max-width: 400px;
+            height: 40px;
+            border: 1.5px solid rgba(255, 255, 255, 0.22);
+            border-top: 1.5px solid rgba(255, 255, 255, 0.35);
+            border-radius: 11px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(15, 15, 15, 0.45) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            color: #e5e5e5;
             font-family: inherit;
-            font-size: 12.5px;
-            font-weight: 500;
+            font-size: 0.82rem;
+            font-weight: 700;
             cursor: pointer;
-        }
-        .btn-secondary:hover {
-            color: var(--text-primary);
-            border-color: var(--text-secondary);
+            transition: all 0.2s;
         }
 
+        .btn-secondary:hover {
+            color: #ffffff;
+            border-color: rgba(255, 26, 26, 0.75);
+            background: rgba(255, 26, 26, 0.18);
+        }
+
+        /* Glass Modal Styles */
         .modal-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.72);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             display: none;
             align-items: center;
             justify-content: center;
@@ -255,23 +413,30 @@
         .modal-box {
             width: 100%;
             max-width: 340px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-xl);
+            background: linear-gradient(145deg, rgba(30, 30, 30, 0.78) 0%, rgba(14, 14, 14, 0.88) 100%);
+            border: 1.5px solid rgba(255, 255, 255, 0.24);
+            border-top: 1.5px solid rgba(255, 255, 255, 0.38);
+            border-radius: 16px;
             padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 12px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 
+                0 20px 45px rgba(0, 0, 0, 0.85),
+                inset 0 1px 1px rgba(255, 255, 255, 0.25);
         }
 
         .modal-title {
-            font-size: 15px;
-            font-weight: 700;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #ffffff;
         }
 
         .modal-desc {
-            font-size: 12.5px;
-            color: var(--text-secondary);
+            font-size: 0.85rem;
+            color: #d8d8d8;
             line-height: 1.4;
         }
 
@@ -279,89 +444,123 @@
             width: 100%;
             height: 40px;
             border: none;
-            background: var(--brand);
-            border-radius: var(--radius-md);
+            background: #ffffff;
+            border-radius: 10px;
             font-family: inherit;
-            font-size: 12.5px;
-            font-weight: 600;
-            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #000000;
             cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+            text-transform: uppercase;
         }
 
         .btn-modal-solid:disabled {
-            background: var(--border);
-            color: var(--text-tertiary);
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.4);
+            box-shadow: none;
             cursor: not-allowed;
+        }
+
+        /* Footer text */
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 0.75rem;
+            color: #999;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
 
-    <div class="app-shell">
-        <header class="top-nav">
-            <span class="nav-title">BYD Song Plus Raffle</span>
-            <button class="icon-btn" id="themeToggleBtn" aria-label="Toggle Theme">
-                <svg id="sunIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                </svg>
-                <svg id="moonIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                </svg>
-            </button>
-        </header>
+    <!-- Background Layer -->
+    <div class="hero-background"></div>
+    <div class="hero-overlay"></div>
 
-        <main class="main-body">
-            <section class="intro-card">
-                <span class="campaign-tag"></span>
-                <h1 class="intro-title">Participant Registration</h1>
-                <p class="intro-sub">Enter your details once to create your personal raffle account. Your profile will remain saved until you log out.</p>
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">BYD <span>LOTTER</span></a>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+        <div class="page-title">
+            <h1>Participant <span>Profile</span></h1>
+            <p>Enter your details once to create your raffle account</p>
+        </div>
+
+        <section class="intro-card">
+            <span class="campaign-tag">Official Registration</span>
+            <p>Please fill in your correct information to secure your participation. Your data remains safe and confidential.</p>
+        </section>
+
+        <section class="form-section">
+            <label class="field-label" for="regFullName">Full Name</label>
+            <input type="text" id="regFullName" class="text-input" placeholder="e.g. Abebe Kebede">
+        </section>
+
+        <section class="form-section">
+            <label class="field-label" for="regPhone">Phone Number</label>
+            <input type="tel" id="regPhone" class="text-input" placeholder="e.g. 0911223344">
+        </section>
+
+        <div class="row-2-col">
+            <section class="form-section">
+                <label class="field-label">Age</label>
+                <div id="ageTrigger" class="custom-select-trigger placeholder">Select Age</div>
+                <input type="hidden" id="regAge" value="">
             </section>
 
             <section class="form-section">
-                <label class="field-label" for="regFullName">1. Full Name</label>
-                <input type="text" id="regFullName" class="text-input" placeholder="e.g. Abebe Kebede">
+                <label class="field-label">Sex</label>
+                <div id="sexTrigger" class="custom-select-trigger placeholder">Select Sex</div>
+                <input type="hidden" id="regSex" value="">
             </section>
+        </div>
 
-            <section class="form-section">
-                <label class="field-label" for="regPhone">Phone Number</label>
-                <input type="tel" id="regPhone" class="text-input" placeholder="e.g. 0911223344">
-            </section>
+        <section class="form-section">
+            <label class="field-label" for="regCity">City</label>
+            <input type="text" id="regCity" class="text-input" placeholder="e.g. Addis Ababa">
+        </section>
+    </main>
 
-            <div class="row-2-col">
-                <section class="form-section">
-                    <label class="field-label" for="regAge">2. Age</label>
-                    <input type="number" id="regAge" class="text-input" placeholder="e.g. 28" min="18" max="120">
-                </section>
-
-                <section class="form-section">
-                    <label class="field-label" for="regSex">3. Sex</label>
-                    <select id="regSex" class="select-input">
-                        <option value="" disabled selected>Select</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
-                </section>
+    <!-- Age Picker Modal -->
+    <div class="picker-modal" id="ageModal">
+        <div class="picker-content">
+            <div class="picker-header">
+                <span>Select Age</span>
+                <button class="picker-close" id="closeAgeModal">&times;</button>
             </div>
-
-            <section class="form-section">
-                <label class="field-label" for="regCity">4. City</label>
-                <input type="text" id="regCity" class="text-input" placeholder="e.g. Addis Ababa">
-            </section>
-        </main>
-
-        <footer class="footer-bar">
-            <button class="btn-primary" id="saveProfileBtn" disabled>Save & Continue to Numbers →</button>
-            <button class="btn-secondary" id="alreadyRegisteredBtn">Already Registered? Enter Phone</button>
-        </footer>
+            <div class="picker-list" id="ageList"></div>
+        </div>
     </div>
+
+    <!-- Sex Picker Modal -->
+    <div class="picker-modal" id="sexModal">
+        <div class="picker-content">
+            <div class="picker-header">
+                <span>Select Sex</span>
+                <button class="picker-close" id="closeSexModal">&times;</button>
+            </div>
+            <div class="picker-list">
+                <div class="picker-item" data-value="Male">Male</div>
+                <div class="picker-item" data-value="Female">Female</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Action Bar -->
+    <div class="footer-bar">
+        <button class="btn-primary" id="saveProfileBtn" disabled>Save & Continue →</button>
+        <button class="btn-secondary" id="alreadyRegisteredBtn">Already Registered? Enter Phone</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2026 BYD Lotter App. All rights reserved.
+    </footer>
 
     <!-- Error/Notice Modal -->
     <div class="modal-backdrop" id="errorModal">
@@ -376,7 +575,7 @@
     <div class="modal-backdrop" id="loginModal">
         <div class="modal-box">
             <h3 class="modal-title">Already Registered</h3>
-            <p class="modal-desc">Enter your registered phone number to sign in directly.</p>
+            <p class="modal-desc">Enter your registered phone number to sign in.</p>
             <div class="form-section">
                 <input type="tel" id="loginPhoneInput" class="text-input" placeholder="e.g. 0911223344">
             </div>
@@ -389,28 +588,50 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, update, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Theme Management
-        const themeToggleBtn = document.getElementById('themeToggleBtn');
-        const sunIcon = document.getElementById('sunIcon');
-        const moonIcon = document.getElementById('moonIcon');
-
-        function applyTheme(theme) {
-            if (theme === 'light') {
-                document.documentElement.setAttribute('data-theme', 'light');
-                sunIcon.style.display = 'none';
-                moonIcon.style.display = 'block';
-            } else {
-                document.documentElement.removeAttribute('data-theme');
-                sunIcon.style.display = 'block';
-                moonIcon.style.display = 'none';
-            }
-            localStorage.setItem('byd_theme', theme);
+        // Populate Age Picker List (18 to 100)
+        const ageListEl = document.getElementById('ageList');
+        for (let age = 18; age <= 100; age++) {
+            const item = document.createElement('div');
+            item.className = 'picker-item';
+            item.dataset.value = age;
+            item.textContent = `${age} Years`;
+            item.addEventListener('click', () => {
+                document.getElementById('regAge').value = age;
+                const trigger = document.getElementById('ageTrigger');
+                trigger.textContent = `${age} Years`;
+                trigger.classList.remove('placeholder');
+                document.getElementById('ageModal').classList.remove('active');
+                validateForm();
+            });
+            ageListEl.appendChild(item);
         }
-        applyTheme(localStorage.getItem('byd_theme') || 'dark');
 
-        themeToggleBtn.addEventListener('click', () => {
-            const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-            applyTheme(current === 'light' ? 'dark' : 'light');
+        // Sex Picker Logic
+        document.querySelectorAll('#sexModal .picker-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const val = item.dataset.value;
+                document.getElementById('regSex').value = val;
+                const trigger = document.getElementById('sexTrigger');
+                trigger.textContent = val;
+                trigger.classList.remove('placeholder');
+                document.getElementById('sexModal').classList.remove('active');
+                validateForm();
+            });
+        });
+
+        // Trigger Modals
+        document.getElementById('ageTrigger').addEventListener('click', () => {
+            document.getElementById('ageModal').classList.add('active');
+        });
+        document.getElementById('closeAgeModal').addEventListener('click', () => {
+            document.getElementById('ageModal').classList.remove('active');
+        });
+
+        document.getElementById('sexTrigger').addEventListener('click', () => {
+            document.getElementById('sexModal').classList.add('active');
+        });
+        document.getElementById('closeSexModal').addEventListener('click', () => {
+            document.getElementById('sexModal').classList.remove('active');
         });
 
         // Firebase Initialization
@@ -459,8 +680,8 @@
         // Form Validation
         const nameEl = document.getElementById('regFullName');
         const phoneEl = document.getElementById('regPhone');
-        const ageEl = document.getElementById('regAge');
-        const sexEl = document.getElementById('regSex');
+        const ageValEl = document.getElementById('regAge');
+        const sexValEl = document.getElementById('regSex');
         const cityEl = document.getElementById('regCity');
         const saveBtn = document.getElementById('saveProfileBtn');
 
@@ -468,17 +689,16 @@
             const nameValid = nameEl.value.trim().length >= 2;
             const phoneDigits = normalizePhoneNumber(phoneEl.value);
             const phoneValid = phoneDigits.length >= 9;
-            const ageVal = parseInt(ageEl.value);
-            const ageValid = !isNaN(ageVal) && ageVal >= 18 && ageVal <= 120;
-            const sexValid = sexEl.value !== "";
+            const ageVal = parseInt(ageValEl.value, 10);
+            const ageValid = !isNaN(ageVal) && ageVal >= 18 && ageVal <= 100;
+            const sexValid = sexValEl.value !== "";
             const cityValid = cityEl.value.trim().length >= 2;
 
             saveBtn.disabled = !(nameValid && phoneValid && ageValid && sexValid && cityValid);
         }
 
-        [nameEl, phoneEl, ageEl, sexEl, cityEl].forEach(el => {
+        [nameEl, phoneEl, cityEl].forEach(el => {
             el.addEventListener('input', validateForm);
-            el.addEventListener('change', validateForm);
         });
 
         // Save Profile to Firebase & Local Session
@@ -486,12 +706,12 @@
             const fullName = nameEl.value.trim();
             const rawPhone = phoneEl.value.trim();
             const normalizedPhone = normalizePhoneNumber(rawPhone);
-            const age = parseInt(ageEl.value);
-            const sex = sexEl.value;
+            const age = parseInt(ageValEl.value, 10);
+            const sex = sexValEl.value;
             const city = cityEl.value.trim();
 
-            if (age < 18) {
-                showError("You must be at least 18 years old to participate.");
+            if (isNaN(age) || age < 18 || age > 100) {
+                showError("Please select a valid age between 18 and 100.");
                 return;
             }
 
@@ -526,7 +746,7 @@
                 console.error("Account Save Error:", err);
                 showError("Failed to save account. Check your connection and try again.");
                 saveBtn.disabled = false;
-                saveBtn.innerText = "Save & Continue to Numbers →";
+                saveBtn.innerText = "Save & Continue →";
             }
         });
 
@@ -578,7 +798,6 @@
 
                 const userData = snapshot.val();
                 
-                // Ensure basic profile structure exists
                 const profilePayload = {
                     fullName: userData.fullName || "User",
                     phone: userData.phone || rawPhone,
