@@ -13,9 +13,9 @@
             --dark-bg: #090305;
             --primary-burgundy: #4a0011;
             --primary-gradient: linear-gradient(135deg, #600016 0%, #200006 100%);
-            /* 3D Light Blue / Cyan Button Gradients */
-            --light-blue-gradient: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
-            --light-blue-shadow: 0 6px 0 #0369a1, 0 12px 25px rgba(2, 132, 199, 0.4);
+            /* 3D White Button Gradients */
+            --white-btn-gradient: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+            --white-btn-shadow: 0 6px 0 #cbd5e1, 0 12px 25px rgba(255, 255, 255, 0.25);
             --gold-gradient: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
             --accent-red: #dc2626;
             --text-light: #f8fafc;
@@ -339,13 +339,13 @@
             margin-top: 2px; 
         }
 
-        /* 3D Animated Light Blue Buy Ticket Button */
+        /* 3D Animated White Buy Ticket Button */
         .buy-ticket-btn {
             width: 100%;
             height: 48px;
-            background: var(--light-blue-gradient);
-            color: #0f172a;
-            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            background: var(--white-btn-gradient);
+            color: #090305;
+            border: 1.5px solid #ffffff;
             border-radius: 14px;
             font-size: 13.5px;
             font-weight: 800;
@@ -356,19 +356,19 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: var(--light-blue-shadow);
+            box-shadow: var(--white-btn-shadow);
             transition: all 0.1s ease-in-out;
             margin-top: 260px;
             transform: translateY(0);
         }
 
         .buy-ticket-btn:hover {
-            filter: brightness(1.05);
+            background: #ffffff;
         }
 
         .buy-ticket-btn:active {
             transform: translateY(4px);
-            box-shadow: 0 2px 0 #0369a1, 0 6px 15px rgba(2, 132, 199, 0.3);
+            box-shadow: 0 2px 0 #cbd5e1, 0 6px 15px rgba(255, 255, 255, 0.15);
         }
 
         .loading-text {
@@ -420,7 +420,7 @@
 
             <!-- Description Card with Bold & Enlarged 1000Birr Only -->
             <div class="info-description-card">
-                <p>Grab your lucky ticket for <span class="price-highlight">1000Birr Only</span>!</p>
+                <p>         <span class="price-highlight">1000Birr Only</span>!</p>
             </div>
 
             <!-- Summary Counters -->
@@ -435,7 +435,7 @@
                 </div>
             </div>
 
-            <!-- Buy Ticket Button with 3D Light Blue Animation -->
+            <!-- Buy Ticket Button with 3D White Animation -->
             <button class="buy-ticket-btn" onclick="window.location.href='car3.html'">
                 <span>Buy Ticket Now</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -529,7 +529,7 @@
                         ticketBox.innerHTML = `
                             <div class="number-badge">#${paddedNum}</div>
                             <div class="owner-phone">👤 ${hiddenPhone}</div>
-                            <div class="owner-meta">📍 ${latest.location}</div>
+                            <div class="owner-meta"> ${latest.location}</div>
                         `;
                         container.appendChild(ticketBox);
                     });
