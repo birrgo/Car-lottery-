@@ -33,20 +33,20 @@
             z-index: -2;
         }
 
-        /* Lighter overlay and reduced blur for a clearer background image */
+        /* Clearer overlay with minimal blur */
         .hero-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(5, 5, 5, 0.62);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
+            background: rgba(5, 5, 5, 0.55);
+            backdrop-filter: blur(1px);
+            -webkit-backdrop-filter: blur(1px);
             z-index: -1;
         }
 
-        /* Fixed Top Header with clean spacing */
+        /* Fixed Top Header */
         header {
             position: fixed;
             top: 0;
@@ -55,15 +55,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 6%;
-            background: rgba(5, 5, 5, 0.78);
-            backdrop-filter: blur(6px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px 6%;
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(4px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 100;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
             letter-spacing: 2px;
             color: #fff;
@@ -76,9 +76,9 @@
         }
 
         .back-home {
-            color: #e0e0e0;
+            color: #dddddd;
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             transition: color 0.3s ease;
         }
@@ -93,10 +93,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 85px 16px 20px 16px; 
+            padding: 82px 16px 20px 16px; 
             flex-grow: 1;
             overflow-y: auto;
-            max-width: 720px;
+            max-width: 680px;
             margin: 0 auto;
             width: 100%;
             scrollbar-width: none;
@@ -106,17 +106,17 @@
             display: none;
         }
 
-        /* Page Title - Increased Font Sizes */
+        /* Page Title */
         .page-title {
             text-align: center;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .page-title h1 {
-            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-size: clamp(1.45rem, 3.2vw, 2rem);
             font-weight: 800;
-            margin-bottom: 6px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+            margin-bottom: 5px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
         }
 
         .page-title h1 span {
@@ -126,10 +126,10 @@
         }
 
         .page-title p {
-            font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+            font-size: clamp(0.95rem, 2vw, 1.2rem);
             font-weight: 900;
             color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
         }
 
         .page-title p span {
@@ -142,24 +142,24 @@
         .info-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 11px;
             width: 100%;
             margin-bottom: 12px;
         }
 
         .info-card {
-            background: rgba(15, 15, 15, 0.82);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-left: 4px solid #ff1a1a;
-            border-radius: 12px;
-            padding: 14px 16px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
+            background: rgba(15, 15, 15, 0.78);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 3.5px solid #ff1a1a;
+            border-radius: 11px;
+            padding: 12px 14px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.5);
         }
 
         .info-card h3 {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             color: #ffffff;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -171,12 +171,12 @@
         }
 
         .info-card li {
-            font-size: 0.95rem;
-            color: #e6e6e6;
-            margin-bottom: 5px;
-            line-height: 1.4;
+            font-size: 0.86rem;
+            color: #dedede;
+            margin-bottom: 4px;
+            line-height: 1.35;
             position: relative;
-            padding-left: 16px;
+            padding-left: 15px;
         }
 
         .info-card li::before {
@@ -188,9 +188,9 @@
         }
 
         .info-card p {
-            font-size: 0.95rem;
-            color: #e6e6e6;
-            line-height: 1.4;
+            font-size: 0.86rem;
+            color: #dedede;
+            line-height: 1.35;
         }
 
         /* Action Button Container */
@@ -198,7 +198,7 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            margin-top: 110px;
+            margin-top: 135px;
             margin-bottom: 35px;
             perspective: 1000px;
         }
@@ -210,11 +210,11 @@
             justify-content: center;
             background: #ffffff;
             color: #000000;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 800;
-            padding: 18px 0;
+            padding: 17px 0;
             width: 80%;
-            max-width: 360px;
+            max-width: 350px;
             border-radius: 16px;
             text-decoration: none;
             letter-spacing: 1.5px;
@@ -265,9 +265,9 @@
         /* Footer */
         footer {
             text-align: center;
-            padding: 12px;
-            font-size: 0.85rem;
-            color: #b0b0b0;
+            padding: 10px;
+            font-size: 0.8rem;
+            color: #aaaaaa;
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
             z-index: 10;
         }
@@ -295,13 +295,13 @@
         <div class="info-container">
             <!-- Card 1 -->
             <div class="info-card">
-                <h3>🚗 የእጣው ዓላማ</h3>
+                <h3> የእጣው ዓላማ</h3>
                 <p>በዘመናዊ የኤሌክትሪክ ተሽከርካሪ ባለቤት የሚያደርግ አስተማማኝ እና ግልጽ የሎተሪ አጋጣሚ።</p>
             </div>
 
             <!-- Card 2 -->
             <div class="info-card">
-                <h3>📋 የተሳታፊዎች መስፈርት</h3>
+                <h3>የተሳታፊዎች መስፈርት</h3>
                 <ul>
                     <li>ዕድሜያቸው 18 እና በላይ የሆነ።</li>
                     <li>የተመዘገበ ትክክለኛ መለያ (Account) ያለው።</li>
@@ -310,7 +310,7 @@
 
             <!-- Card 3 -->
             <div class="info-card">
-                <h3>🎟️ እንዴት መሳተፍ ይቻላል?</h3>
+                <h3>እንዴት መሳተፍ ይቻላል?</h3>
                 <ul>
                     <li>መተግበሪያውን ይክፈቱ።</li>
                     <li>የእጣ ትኬት በመግዛት ዕድልዎን ያንቁ።</li>
@@ -319,7 +319,7 @@
 
             <!-- Card 4 -->
             <div class="info-card">
-                <h3>🏆 አሸናፊዎችን መምረጥ</h3>
+                <h3>አሸናፊዎችን መምረጥ</h3>
                 <ul>
                     <li>በዲጂታል ፍትሃዊ ስርዓት ይመረጣሉ።</li>
                     <li>በ30 ቀን ውስጥ ሽልማታቸውን ይረከባሉ።</li>
