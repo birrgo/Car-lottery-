@@ -10,33 +10,32 @@
     
     <style>
         :root {
-            --dark-bg: #090305;
-            --primary-burgundy: #4a0011;
-            --primary-gradient: linear-gradient(135deg, #600016 0%, #200006 100%);
-            /* 3D White Button Gradients */
-            --white-btn-gradient: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
-            --white-btn-shadow: 0 6px 0 #cbd5e1, 0 12px 25px rgba(255, 255, 255, 0.25);
-            --gold-gradient: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
-            --accent-red: #dc2626;
-            --text-light: #f8fafc;
-            --text-muted: #cbd5e1;
-            --card-bg: rgba(25, 10, 15, 0.85);
-            --border-glass: rgba(255, 255, 255, 0.15);
-            --card-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.6);
-            --border-radius-md: 16px;
+            --dark-bg: #050505;
+            --accent-red: #ff1a1a;
+            --text-light: #ffffff;
+            --text-muted: #dedede;
+            /* Updated card styling to match first code */
+            --card-bg: rgba(15, 15, 15, 0.78);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 5px 18px rgba(0, 0, 0, 0.5);
+            --border-radius-md: 11px;
         }
 
         /* Black and White Mode Overrides */
         body.bw-mode {
-            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-bg: rgba(248, 250, 252, 0.9);
             --text-light: #0f172a;
             --text-muted: #334155;
-            --border-glass: rgba(0, 0, 0, 0.2);
+            --border-glass: rgba(0, 0, 0, 0.15);
             --accent-red: #000000;
         }
 
-        body.bw-mode .app-header {
+        body.bw-mode header {
             background: rgba(241, 245, 249, 0.85) !important;
+            color: #0f172a;
+        }
+
+        body.bw-mode .logo {
             color: #0f172a;
         }
 
@@ -49,13 +48,12 @@
             color: #0f172a;
         }
 
-        body.bw-mode .metric-card.taken { border-left: 4px solid #000000; }
-        body.bw-mode .metric-card.available { border-left: 4px solid #475569; }
+        body.bw-mode .metric-card.taken { border-left: 3.5px solid #000000; }
+        body.bw-mode .metric-card.available { border-left: 3.5px solid #475569; }
         body.bw-mode .metric-value { color: #0f172a; }
-        body.bw-mode .metric-card.available .metric-value { color: #1e293b; }
         body.bw-mode .owner-phone { color: #0f172a; }
         body.bw-mode .number-badge { background: #000000; color: #ffd700; border: none; }
-        body.bw-mode .buy-ticket-btn { background: #0f172a; color: #ffffff; border: none; box-shadow: 0 6px 0 #020617, 0 12px 25px rgba(0,0,0,0.3); }
+        body.bw-mode .buy-ticket-btn { background: #ffffff !important; color: #000000 !important; border: none !important; }
 
         * {
             box-sizing: border-box;
@@ -104,27 +102,43 @@
             z-index: 1;
         }
 
-        /* Slightly increased Top Header Height */
-        .app-header {
+        /* Exact Header Style */
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            background: rgba(15, 5, 8, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-glass);
-            color: var(--text-light);
-            position: relative;
-            padding: calc(8px + env(safe-area-inset-top)) 12px 8px 12px;
-            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: calc(16px + env(safe-area-inset-top)) 6% 16px 6%;
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 100;
         }
 
-        .header-top-bar {
+        .logo {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #ff1a1a;
+        }
+
+        .header-right-group {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            position: relative;
-            z-index: 3;
+            gap: 8px;
         }
 
-        .theme-toggle-btn, .btn-back {
+        .theme-toggle-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -143,34 +157,9 @@
             white-space: nowrap;
         }
 
-        .btn-back {
-            width: 28px;
-            padding: 0;
-            border-radius: 50%;
-        }
-
-        .theme-toggle-btn:active, .btn-back:active {
+        .theme-toggle-btn:active {
             transform: scale(0.92);
             background: #222222;
-        }
-
-        .header-center-content {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            text-align: center;
-            position: relative;
-            z-index: 3;
-        }
-
-        .header-title h2 {
-            font-size: 13px;
-            font-weight: 800;
-            color: inherit;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
         }
 
         .live-tracker-badge {
@@ -213,20 +202,21 @@
             overflow-y: auto;
             position: relative;
             z-index: 3;
-            padding: 12px 16px;
+            padding: calc(75px + env(safe-area-inset-top)) 16px 20px 16px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 11px;
             justify-content: flex-start;
             scrollbar-width: none;
         }
         .app-content::-webkit-scrollbar { display: none; }
 
-        /* Top Description Card */
+        /* Top Description Card Styled Like First Code (.info-card) */
         .info-description-card {
             background: var(--card-bg);
             border: 1px solid var(--border-glass);
-            padding: 10px 12px;
+            border-left: 3.5px solid var(--accent-red);
+            padding: 12px 14px;
             border-radius: var(--border-radius-md);
             backdrop-filter: blur(10px);
             box-shadow: var(--card-shadow);
@@ -234,41 +224,41 @@
         }
 
         .info-description-card p {
-            font-size: 11.5px;
+            font-size: 0.86rem;
             font-weight: 600;
             color: var(--text-muted);
-            line-height: 1.4;
+            line-height: 1.35;
         }
 
         /* Highlighted 1000Birr Only Styling */
         .price-highlight {
             color: #38bdf8;
             font-weight: 800;
-            font-size: 14.5px;
+            font-size: 1.05rem;
             text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
         }
 
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
+            gap: 11px;
         }
 
         .metric-card {
             background: var(--card-bg);
             border-radius: var(--border-radius-md);
-            padding: 9px;
+            padding: 12px 14px;
             text-align: center;
             border: 1px solid var(--border-glass);
             backdrop-filter: blur(10px);
             box-shadow: var(--card-shadow);
         }
 
-        .metric-card.taken { border-left: 4px solid var(--accent-red); }
-        .metric-card.available { border-left: 4px solid #059669; }
+        .metric-card.taken { border-left: 3.5px solid var(--accent-red); }
+        .metric-card.available { border-left: 3.5px solid #059669; }
 
         .metric-value {
-            font-size: 16px;
+            font-size: 1.25rem;
             font-weight: 800;
             color: var(--text-light);
         }
@@ -276,16 +266,16 @@
         .metric-card.available .metric-value { color: #34d399; }
 
         .metric-label {
-            font-size: 9.5px;
+            font-size: 0.82rem;
             font-weight: 800;
             color: var(--text-muted);
             text-transform: uppercase;
-            margin-top: 2px;
+            margin-top: 3px;
             letter-spacing: 0.5px;
         }
 
         .section-label {
-            font-size: 11px;
+            font-size: 0.9rem;
             font-weight: 800;
             color: #ffd700;
             text-transform: uppercase;
@@ -294,18 +284,19 @@
             padding-left: 7px;
         }
 
-        /* 3-Column Horizontal Grid Container */
+        /* 3-Column Horizontal Grid Container Styled Like First Code Cards */
         .tickets-3col-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 11px;
         }
 
         .ticket-grid-box {
             background: var(--card-bg);
-            border: 1.5px solid rgba(255, 215, 0, 0.3);
-            padding: 8px 6px;
-            border-radius: 12px;
+            border: 1px solid var(--border-glass);
+            border-left: 3.5px solid var(--accent-red);
+            padding: 12px 8px;
+            border-radius: var(--border-radius-md);
             box-shadow: var(--card-shadow);
             backdrop-filter: blur(10px);
             display: flex;
@@ -313,72 +304,103 @@
             align-items: center;
             text-align: center;
             justify-content: space-between;
-            min-height: 78px;
+            min-height: 85px;
         }
 
         .number-badge {
             background: linear-gradient(135deg, #7f1d1d 0%, #450a0a 100%);
             color: #ffd700;
             font-weight: 800;
-            font-size: 13px;
-            padding: 2px 7px;
+            font-size: 0.9rem;
+            padding: 2px 8px;
             border-radius: 6px;
             border: 1px solid rgba(255, 215, 0, 0.2);
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
         .owner-phone { 
-            font-size: 11.5px; 
+            font-size: 0.85rem; 
             font-weight: 800; 
             color: var(--text-light); 
         }
         
         .owner-meta { 
-            font-size: 9.5px; 
+            font-size: 0.75rem; 
             color: var(--text-muted); 
             margin-top: 2px; 
         }
 
-        /* 3D Animated White Buy Ticket Button */
+        /* White 3D Animated Luxury Button ("CONTINUE" / Buy Button Style from First Code) */
         .buy-ticket-btn {
-            width: 100%;
-            height: 48px;
-            background: var(--white-btn-gradient);
-            color: #090305;
-            border: 1.5px solid #ffffff;
-            border-radius: 14px;
-            font-size: 13.5px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            cursor: pointer;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
+            background: #ffffff;
+            color: #000000;
+            font-size: 1.15rem;
+            font-weight: 800;
+            padding: 17px 0;
+            width: 100%;
+            border-radius: 16px;
+            text-decoration: none;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
             gap: 8px;
-            box-shadow: var(--white-btn-shadow);
-            transition: all 0.1s ease-in-out;
-            margin-top: 260px;
-            transform: translateY(0);
+            
+            transform-style: preserve-3d;
+            box-shadow: 
+                0 4px 6px rgba(0, 0, 0, 0.3),
+                0 10px 25px rgba(255, 255, 255, 0.15),
+                0 0 50px rgba(255, 255, 255, 0.1),
+                inset 0 2px 3px rgba(255, 255, 255, 1),
+                inset 0 -5px 12px rgba(0, 0, 0, 0.15);
+            
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            animation: floatAnimation 3s ease-in-out infinite;
+            margin-top: auto;
+            margin-bottom: 10px;
+        }
+
+        @keyframes floatAnimation {
+            0%, 100% {
+                transform: translateY(0) rotateX(0deg);
+            }
+            50% {
+                transform: translateY(-5px) rotateX(2deg);
+            }
         }
 
         .buy-ticket-btn:hover {
+            animation-play-state: paused;
+            transform: translateY(-6px) scale(1.02) rotateX(4deg);
             background: #ffffff;
+            color: #000000;
+            box-shadow: 
+                0 10px 15px rgba(0, 0, 0, 0.4),
+                0 20px 40px rgba(255, 255, 255, 0.3),
+                0 0 80px rgba(255, 255, 255, 0.25),
+                inset 0 2px 4px rgba(255, 255, 255, 1),
+                inset 0 -6px 15px rgba(0, 0, 0, 0.2);
         }
 
         .buy-ticket-btn:active {
-            transform: translateY(4px);
-            box-shadow: 0 2px 0 #cbd5e1, 0 6px 15px rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px) scale(0.98) rotateX(0deg);
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.4),
+                0 5px 15px rgba(255, 255, 255, 0.2),
+                inset 0 2px 2px rgba(255, 255, 255, 0.8);
         }
 
         .loading-text {
             text-align: center;
-            font-size: 11.5px;
+            font-size: 0.86rem;
             color: var(--text-muted);
-            padding: 10px;
+            padding: 12px;
             background: var(--card-bg);
-            border-radius: 12px;
-            border: 1.5px dashed rgba(255, 215, 0, 0.3);
+            border-radius: var(--border-radius-md);
+            border: 1px dashed rgba(255, 215, 0, 0.3);
             backdrop-filter: blur(10px);
         }
     </style>
@@ -387,22 +409,14 @@
 
     <div class="app-view">
         
-        <header class="app-header">
-            <div class="header-top-bar">
-                <button class="btn-back" onclick="window.location.href='byd.html'" aria-label="Back">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                </button>
-                
-                <div class="header-center-content">
-                    <div class="header-title">
-                        <h2>BYD Allocation Portal</h2>
-                    </div>
-                    <div class="live-tracker-badge">
-                        <span class="pulse-dot"></span>
-                        <span class="live-tracker-text">Live Active</span>
-                    </div>
+        <!-- Header with "ወደ መነሻ" removed -->
+        <header>
+            <a href="index.html" class="logo">BYD <span>LOTTER</span></a>
+            <div class="header-right-group">
+                <div class="live-tracker-badge">
+                    <span class="pulse-dot"></span>
+                    <span class="live-tracker-text">Live Active</span>
                 </div>
-
                 <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeToggleBtn">
                     <span>🌓 B&W</span>
                 </button>
@@ -420,7 +434,7 @@
 
             <!-- Description Card with Bold & Enlarged 1000Birr Only -->
             <div class="info-description-card">
-                <p>         <span class="price-highlight">1000Birr Only</span>!</p>
+                <p>        <span class="price-highlight">1000 Birr  Only | 1000 ብር ብቻ  </span>!</p>
             </div>
 
             <!-- Summary Counters -->
@@ -435,7 +449,7 @@
                 </div>
             </div>
 
-            <!-- Buy Ticket Button with 3D White Animation -->
+            <!-- Buy Ticket Button with 3D Luxury Animation -->
             <button class="buy-ticket-btn" onclick="window.location.href='car3.html'">
                 <span>Buy Ticket Now</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -529,7 +543,7 @@
                         ticketBox.innerHTML = `
                             <div class="number-badge">#${paddedNum}</div>
                             <div class="owner-phone">👤 ${hiddenPhone}</div>
-                            <div class="owner-meta"> ${latest.location}</div>
+                            <div class="owner-meta">📍 ${latest.location}</div>
                         `;
                         container.appendChild(ticketBox);
                     });
@@ -540,7 +554,7 @@
                         emptyBox.style.opacity = '0.4';
                         emptyBox.innerHTML = `
                             <div class="number-badge" style="background:#334155;color:#94a3b8;">#----</div>
-                            <div class="owner-phone" style="font-size:10.5px;">Available</div>
+                            <div class="owner-phone" style="font-size:0.75rem;">Available</div>
                             <div class="owner-meta">Open Slot</div>
                         `;
                         container.appendChild(emptyBox);

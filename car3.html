@@ -1244,7 +1244,8 @@
                     location: userProfile.city,
                     timestamp: timestampStr,
                     status: 'unpaid',
-                    orderRef: currentOrderRef
+                    orderRef: currentOrderRef,
+                    paymentMethod: selectedMethodKey
                 };
                 await set(ref(db, `new_byd/tickets/${currentTicketKey}`), ticketData);
 
@@ -1262,6 +1263,7 @@
                 };
                 await set(ref(db, `users/${completeRawCardSequence}/transactions/${currentTxKey}`), txData);
 
+                // Store in sessionStorage as requested
                 sessionStorage.setItem('pending_byd_orderRef', currentOrderRef);
                 sessionStorage.setItem('pending_byd_ticketNum', finalTicketNum);
                 sessionStorage.setItem('pending_byd_fullName', userProfile.fullName);
