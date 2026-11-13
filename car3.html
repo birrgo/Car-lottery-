@@ -571,6 +571,72 @@
             font-size: 11px;
             color: var(--text-secondary);
         }
+
+        /* --- NETWORK STATUS POPUP STYLES --- */
+        .net-banner {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translate(-50%, -160%);
+            width: calc(100% - 32px);
+            max-width: 420px;
+            background: #111827;
+            color: #ffffff;
+            border-radius: 14px;
+            padding: 13px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 9999;
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.25s;
+        }
+        .net-banner.visible {
+            transform: translate(-50%, 0);
+        }
+        .net-banner.offline {
+            background: #991b1b;
+        }
+        .net-banner.slow {
+            background: #b45309;
+        }
+        .net-banner.online {
+            background: #059669;
+        }
+        .net-banner-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
+        }
+        .net-banner-title {
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .net-banner-sub {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+        .net-banner-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+        .net-banner-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -578,6 +644,26 @@
     <!-- Background Layer -->
     <div class="hero-background"></div>
     <div class="hero-overlay"></div>
+
+    <!-- Wide Network Status Popup Banner -->
+    <div id="networkStatusBanner" class="net-banner" role="status" aria-live="polite">
+        <div class="net-banner-left">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+                <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+                <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+                <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
+                <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+                <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                <line x1="12" y1="20" x2="12.01" y2="20"></line>
+            </svg>
+            <div>
+                <div class="net-banner-title" id="netBannerTitle">No Internet Connection</div>
+                <div class="net-banner-sub" id="netBannerSub">Showing cached data. Reconnecting automatically...</div>
+            </div>
+        </div>
+        <button type="button" class="net-banner-btn" onclick="window.location.reload()">Retry</button>
+    </div>
 
     <div class="app-shell">
         <header class="top-nav">
@@ -1157,6 +1243,70 @@
                 console.error("Reservation Error Detail:", err);
                 showCustomError("Reservation failed. Try again.");
             }
+        }
+    </script>
+
+    <!-- Network Status Popup Script -->
+    <script>
+        const netBanner = document.getElementById('networkStatusBanner');
+        const netTitle = document.getElementById('netBannerTitle');
+        const netSub = document.getElementById('netBannerSub');
+        let hideBannerTimer = null;
+
+        function showNetworkPopup(state) {
+            clearTimeout(hideBannerTimer);
+            netBanner.classList.remove('offline', 'slow', 'online');
+
+            if (state === 'OFFLINE') {
+                netBanner.classList.add('offline', 'visible');
+                netTitle.innerText = 'You Are Offline';
+                netSub.innerText = 'Check your mobile connection.';
+            } else if (state === 'SLOW') {
+                netBanner.classList.add('slow', 'visible');
+                netTitle.innerText = 'Slow Internet Detected';
+                netSub.innerText = 'Loaded cached page for fast speed.';
+            } else if (state === 'ONLINE') {
+                if (!netBanner.classList.contains('visible')) return;
+                netBanner.classList.add('online', 'visible');
+                netTitle.innerText = 'Back Online';
+                netSub.innerText = 'Connection restored successfully.';
+                hideBannerTimer = setTimeout(() => {
+                    netBanner.classList.remove('visible');
+                }, 3000);
+            }
+        }
+
+        window.addEventListener('offline', () => showNetworkPopup('OFFLINE'));
+        window.addEventListener('online', () => showNetworkPopup('ONLINE'));
+
+        if (navigator.connection) {
+            const checkConnectionSpeed = () => {
+                if (!navigator.onLine) return;
+                const type = navigator.connection.effectiveType;
+                if (type === 'slow-2g' || type === '2g') {
+                    showNetworkPopup('SLOW');
+                }
+            };
+            navigator.connection.addEventListener('change', checkConnectionSpeed);
+            checkConnectionSpeed();
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch((err) => {
+                    console.log('Service Worker registration failed:', err);
+                });
+            });
+
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                if (event.data && event.data.type === 'NETWORK_STATUS') {
+                    showNetworkPopup(event.data.status);
+                }
+            });
+        }
+
+        if (!navigator.onLine) {
+            showNetworkPopup('OFFLINE');
         }
     </script>
 </body>
