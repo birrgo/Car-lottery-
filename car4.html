@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>BirrGo - BYD Allocated Tickets Registry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-burgundy: #4a0011;
+            --primary-gradient: linear-gradient(135deg, #600016 0%, #30000a 100%);
+            --green-gradient: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            --gold-gradient: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --bg-light: #f8fafc;
+            --card-bg: #ffffff;
+            --border-light: #e2e8f0;
+            --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+            --border-radius-md: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.2px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100dvh;
+            overflow: hidden;
+            background-color: #f1f5f9;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .app-view {
+            width: 100%;
+            height: 100dvh;
+            max-width: 450px;
+            background-color: var(--bg-light);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Top Header Styled Like Reference Screenshot */
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: calc(16px + env(safe-area-inset-top)) 6% 16px 6%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary-burgundy);
+        }
+
+        .header-right-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Live Tracker Badge Style */
+        .live-tracker-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #f1f5f9;
+            border: 1px solid var(--border-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #16a34a;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+            animation: pulse-animation 1.5s infinite;
+        }
+
+        @keyframes pulse-animation {
+            0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); }
+            70% { box-shadow: 0 0 0 5px rgba(22, 163, 74, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+        }
+
+        .live-tracker-text {
+            font-size: 9px;
+            font-weight: 800;
+            color: var(--primary-burgundy);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* App Content Area */
+        .app-content {
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
+            z-index: 3;
+            padding: calc(75px + env(safe-area-inset-top)) 16px 20px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            scrollbar-width: none;
+        }
+        .app-content::-webkit-scrollbar { display: none; }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-md);
+            padding: 14px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--card-shadow);
+        }
+
+        .metric-card.taken { border-left: 4px solid var(--primary-burgundy); }
+        .metric-card.available { border-left: 4px solid #16a34a; }
+
+        .metric-value {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .metric-card.available .metric-value { color: #16a34a; }
+
+        .metric-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 3px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 6px;
+            background: #e2e8f0;
+            padding: 4px;
+            border-radius: 12px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 10px 4px;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tab-btn.active.taken-tab {
+            background: var(--primary-burgundy);
+            color: #ffffff;
+            box-shadow: 0 2px 6px rgba(74, 0, 17, 0.25);
+        }
+
+        .tab-btn.active.available-tab {
+            background: #16a34a;
+            color: #ffffff;
+            box-shadow: 0 2px 6px rgba(22, 163, 74, 0.25);
+        }
+
+        /* Search Input */
+        .search-box-container {
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        .search-input {
+            width: 100%;
+            height: 48px;
+            border-radius: var(--border-radius-md);
+            border: 1.5px solid var(--border-light);
+            padding: 0 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            outline: none;
+            background: var(--card-bg);
+            box-shadow: var(--card-shadow);
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-burgundy);
+        }
+
+        .section-label-header {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            border-left: 3px solid var(--primary-burgundy);
+            padding-left: 8px;
+            margin-top: 4px;
+        }
+
+        .dashboard-list-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .dashboard-row-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-left: 3.5px solid var(--primary-burgundy);
+            padding: 14px 16px;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--card-shadow);
+        }
+
+        .dashboard-row-card.available-card {
+            border-left: 3.5px solid #16a34a;
+            background: #f0fdf4;
+        }
+
+        .number-badge {
+            background: var(--primary-gradient);
+            color: #ffd700;
+            font-weight: 800;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 10px;
+            min-width: 70px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(74, 0, 17, 0.2);
+        }
+
+        .number-badge.badge-available {
+            background: var(--green-gradient);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(22, 163, 74, 0.25);
+        }
+
+        .owner-details {
+            text-align: right;
+        }
+
+        .owner-phone {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .status-tag-available {
+            font-size: 12px;
+            font-weight: 800;
+            color: #16a34a;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 4px;
+        }
+
+        .owner-meta {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        
+        .loading-text {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            padding: 30px 0;
+            background: var(--card-bg);
+            border-radius: var(--border-radius-md);
+            border: 1px dashed var(--border-light);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-view">
+        
+        <header>
+            <a href="index.html" class="logo">BYD <span>LOTTERY</span></a>
+            <div class="header-right-group">
+                <div class="live-tracker-badge">
+                    <span class="pulse-dot"></span>
+                    <span class="live-tracker-text">Live Active</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="app-content">
+            
+            <!-- Summary Counters -->
+            <div class="metrics-grid">
+                <div class="metric-card taken">
+                    <div class="metric-value" id="countTaken">0</div>
+                    <div class="metric-label">Taken Numbers</div>
+                </div>
+                <div class="metric-card available">
+                    <div class="metric-value" id="countAvailable">0</div>
+                    <div class="metric-label">Available Numbers</div>
+                </div>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="filter-tabs">
+                <button class="tab-btn taken-tab active" onclick="setFilter('taken', this)">Taken</button>
+                <button class="tab-btn available-tab" onclick="setFilter('available', this)">Available</button>
+            </div>
+
+            <!-- Search Field -->
+            <div class="search-box-container">
+                <input type="text" id="dashboardSearch" class="search-input" placeholder="🔍 Filter ticket number, phone or location...">
+            </div>
+
+            <div class="section-label-header" id="sectionHeaderLabel">Allocated Numbers (Taken)</div>
+
+            <div id="loadingIndicator" class="loading-text">Synchronizing allocation registry matrix...</div>
+
+            <div class="dashboard-list-stack" id="dashboardStack"></div>
+
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "YOUR_NEW_FIREBASE_WEB_API_KEY",
+            authDomain: "byd-87f69.firebaseapp.com",
+            databaseURL: "https://byd-87f69-default-rtdb.firebaseio.com",
+            projectId: "byd-87f69",
+            storageBucket: "byd-87f69.firebasestorage.app",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const MAX_TICKET_NUMBER = 10000;
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        
+        let masterAllPool = [];
+        let currentFilter = 'taken';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchAllocatedRegistry();
+            document.getElementById('dashboardSearch').addEventListener('input', applyFiltersAndRender);
+        });
+
+        function fetchAllocatedRegistry() {
+            const ticketsRef = ref(db, 'new_byd/tickets');
+            
+            onValue(ticketsRef, (snapshot) => {
+                document.getElementById('loadingIndicator').style.display = 'none';
+                const data = snapshot.val() || {};
+
+                const takenMap = new Map();
+                
+                Object.values(data).forEach(t => {
+                    if (t && t.ticketNum !== undefined && !isNaN(t.ticketNum)) {
+                        const st = (t.status || '').toLowerCase().trim();
+                        if (st === 'approved' || st === 'pending') {
+                            const parsedNum = parseInt(t.ticketNum, 10);
+                            takenMap.set(parsedNum, {
+                                ticketNum: parsedNum,
+                                phone: t.phone || "0900000000",
+                                location: t.location || "Addis Ababa",
+                                cardSequence: t.cardSequence || ""
+                            });
+                        }
+                    }
+                });
+
+                masterAllPool = [];
+                for (let i = 0; i <= MAX_TICKET_NUMBER; i++) {
+                    const paddedNum = i.toString().padStart(4, '0');
+                    if (takenMap.has(i)) {
+                        const info = takenMap.get(i);
+                        masterAllPool.push({
+                            ticketNum: paddedNum,
+                            status: 'taken',
+                            phone: info.phone,
+                            location: info.location,
+                            cardSequence: info.cardSequence
+                        });
+                    } else {
+                        masterAllPool.push({
+                            ticketNum: paddedNum,
+                            status: 'available',
+                            phone: null,
+                            location: null,
+                            cardSequence: null
+                        });
+                    }
+                }
+
+                updateSummaryMetrics();
+                applyFiltersAndRender();
+            });
+        }
+
+        function updateSummaryMetrics() {
+            const takenCount = masterAllPool.filter(t => t.status === 'taken').length;
+            const availableCount = (MAX_TICKET_NUMBER + 1) - takenCount;
+
+            document.getElementById('countTaken').innerText = takenCount;
+            document.getElementById('countAvailable').innerText = availableCount;
+        }
+
+        window.setFilter = function(filter, element) {
+            currentFilter = filter;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+
+            const labels = {
+                'taken': 'Allocated Numbers (Taken)',
+                'available': 'Unallocated Numbers (Available)'
+            };
+            document.getElementById('sectionHeaderLabel').innerText = labels[filter];
+
+            applyFiltersAndRender();
+        };
+
+        function applyFiltersAndRender() {
+            const query = document.getElementById('dashboardSearch').value.toLowerCase().trim();
+
+            let list = masterAllPool.filter(item => item.status === currentFilter);
+
+            if (query) {
+                list = list.filter(t => {
+                    const phoneMatch = t.phone ? t.phone.toLowerCase().includes(query) : false;
+                    const seqMatch = t.cardSequence ? t.cardSequence.toLowerCase().includes(query) : false;
+                    const numberMatch = t.ticketNum.toLowerCase().includes(query);
+                    const locationMatch = t.location ? t.location.toLowerCase().includes(query) : false;
+                    return phoneMatch || seqMatch || numberMatch || locationMatch;
+                });
+            }
+
+            renderDashboardRegistry(list);
+        }
+
+        function renderDashboardRegistry(items) {
+            const container = document.getElementById('dashboardStack');
+            container.innerHTML = '';
+
+            if(items.length === 0) {
+                container.innerHTML = `<div class="loading-text">No records match the active query selection.</div>`;
+                return;
+            }
+
+            const renderLimit = items.length > 200 ? 200 : items.length;
+
+            for(let i = 0; i < renderLimit; i++) {
+                const ticket = items[i];
+                const card = document.createElement('div');
+                
+                if(ticket.status === 'taken') {
+                    card.className = 'dashboard-row-card';
+                    const rawPhone = String(ticket.phone || "0900000000");
+                    const hiddenPhone = rawPhone.length >= 7 ? rawPhone.substring(0, 5) + "••••" + rawPhone.slice(-2) : rawPhone;
+                    const location = ticket.location || "Addis Ababa";
+
+                    card.innerHTML = `
+                        <div class="number-badge">#${ticket.ticketNum}</div>
+                        <div class="owner-details">
+                            <div class="owner-phone">👤 ${hiddenPhone}</div>
+                            <div class="owner-meta">📍 ${location}</div>
+                        </div>
+                    `;
+                } else {
+                    card.className = 'dashboard-row-card available-card';
+                    card.innerHTML = `
+                        <div class="number-badge badge-available">#${ticket.ticketNum}</div>
+                        <div class="owner-details">
+                            <div class="status-tag-available">🟢 Available</div>
+                            <div class="owner-meta">Not Reserved</div>
+                        </div>
+                    `;
+                }
+                
+                container.appendChild(card);
+            }
+
+            if (items.length > 200) {
+                const footerNotice = document.createElement('div');
+                footerNotice.style.cssText = "text-align:center;font-size:11px;color:var(--text-muted);padding:10px;";
+                footerNotice.innerText = `Showing top 200 of ${items.length} records. Filter query to narrow results.`;
+                container.appendChild(footerNotice);
+            }
+        }
+    </script>
+</body>
+</html>

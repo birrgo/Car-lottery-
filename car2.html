@@ -14,46 +14,11 @@
             --accent-red: #ff1a1a;
             --text-light: #ffffff;
             --text-muted: #dedede;
-            /* Updated card styling to match first code */
             --card-bg: rgba(15, 15, 15, 0.78);
             --border-glass: rgba(255, 255, 255, 0.1);
             --card-shadow: 0 5px 18px rgba(0, 0, 0, 0.5);
             --border-radius-md: 11px;
         }
-
-        /* Black and White Mode Overrides */
-        body.bw-mode {
-            --card-bg: rgba(248, 250, 252, 0.9);
-            --text-light: #0f172a;
-            --text-muted: #334155;
-            --border-glass: rgba(0, 0, 0, 0.15);
-            --accent-red: #000000;
-        }
-
-        body.bw-mode header {
-            background: rgba(241, 245, 249, 0.85) !important;
-            color: #0f172a;
-        }
-
-        body.bw-mode .logo {
-            color: #0f172a;
-        }
-
-        body.bw-mode .metric-card,
-        body.bw-mode .info-description-card,
-        body.bw-mode .ticket-grid-box,
-        body.bw-mode .loading-text {
-            background: rgba(248, 250, 252, 0.9) !important;
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            color: #0f172a;
-        }
-
-        body.bw-mode .metric-card.taken { border-left: 3.5px solid #000000; }
-        body.bw-mode .metric-card.available { border-left: 3.5px solid #475569; }
-        body.bw-mode .metric-value { color: #0f172a; }
-        body.bw-mode .owner-phone { color: #0f172a; }
-        body.bw-mode .number-badge { background: #000000; color: #ffd700; border: none; }
-        body.bw-mode .buy-ticket-btn { background: #ffffff !important; color: #000000 !important; border: none !important; }
 
         * {
             box-sizing: border-box;
@@ -102,7 +67,7 @@
             z-index: 1;
         }
 
-        /* Exact Header Style */
+        /* Header Style */
         header {
             position: absolute;
             top: 0;
@@ -112,9 +77,9 @@
             justify-content: space-between;
             align-items: center;
             padding: calc(16px + env(safe-area-inset-top)) 6% 16px 6%;
-            background: rgba(5, 5, 5, 0.7);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 100;
         }
@@ -135,65 +100,43 @@
         .header-right-group {
             display: flex;
             align-items: center;
-            gap: 8px;
         }
 
-        .theme-toggle-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            text-decoration: none;
-            height: 28px;
-            border-radius: 14px;
-            background: #111111;
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 0 10px;
-            white-space: nowrap;
-        }
-
-        .theme-toggle-btn:active {
-            transform: scale(0.92);
-            background: #222222;
-        }
-
+        /* Bold & Clear Red/White Live Tracker Badge */
         .live-tracker-badge {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 215, 0, 0.25);
-            padding: 3px 7px;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.25) 0%, rgba(0, 0, 0, 0.6) 100%);
+            border: 1.5px solid rgba(255, 26, 26, 0.6);
+            padding: 5px 12px;
             border-radius: 20px;
             backdrop-filter: blur(6px);
+            box-shadow: 0 0 12px rgba(255, 26, 26, 0.3);
         }
 
         .pulse-dot {
-            width: 5px;
-            height: 5px;
-            background-color: #22c55e;
+            width: 8px;
+            height: 8px;
+            background-color: #ff1a1a;
             border-radius: 50%;
-            box-shadow: 0 0 4px rgba(34, 197, 94, 0.9);
-            animation: pulse-animation 1.5s infinite;
+            box-shadow: 0 0 8px #ff1a1a, 0 0 12px #ff1a1a;
+            animation: pulse-animation 1.2s infinite;
         }
 
         @keyframes pulse-animation {
-            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.8); }
-            70% { box-shadow: 0 0 0 3px rgba(34, 197, 94, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 26, 26, 0.9); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(255, 26, 26, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 26, 26, 0); }
         }
 
         .live-tracker-text {
-            font-size: 8.5px;
-            font-weight: 700;
-            color: #ffd700;
+            font-size: 10px;
+            font-weight: 800;
+            color: #ffffff;
             text-transform: uppercase;
-            letter-spacing: 0.4px;
+            letter-spacing: 0.8px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
         }
 
         /* App Content Area */
@@ -211,7 +154,6 @@
         }
         .app-content::-webkit-scrollbar { display: none; }
 
-        /* Top Description Card Styled Like First Code (.info-card) */
         .info-description-card {
             background: var(--card-bg);
             border: 1px solid var(--border-glass);
@@ -230,7 +172,6 @@
             line-height: 1.35;
         }
 
-        /* Highlighted 1000Birr Only Styling */
         .price-highlight {
             color: #38bdf8;
             font-weight: 800;
@@ -284,7 +225,6 @@
             padding-left: 7px;
         }
 
-        /* 3-Column Horizontal Grid Container Styled Like First Code Cards */
         .tickets-3col-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -330,7 +270,15 @@
             margin-top: 2px; 
         }
 
-        /* White 3D Animated Luxury Button ("CONTINUE" / Buy Button Style from First Code) */
+        /* Action Buttons Container */
+        .action-buttons-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: auto;
+            margin-bottom: 10px;
+        }
+
         .buy-ticket-btn {
             display: inline-flex;
             align-items: center;
@@ -359,8 +307,6 @@
             
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             animation: floatAnimation 3s ease-in-out infinite;
-            margin-top: auto;
-            margin-bottom: 10px;
         }
 
         @keyframes floatAnimation {
@@ -393,6 +339,38 @@
                 inset 0 2px 2px rgba(255, 255, 255, 0.8);
         }
 
+        /* Secondary Matrix Total Button */
+        .matrix-total-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(20, 20, 20, 0.85);
+            color: #ffd700;
+            font-size: 0.95rem;
+            font-weight: 800;
+            padding: 13px 0;
+            width: 100%;
+            border-radius: 14px;
+            text-decoration: none;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            cursor: pointer;
+            gap: 8px;
+            backdrop-filter: blur(6px);
+            transition: all 0.2s ease;
+        }
+
+        .matrix-total-btn:hover {
+            background: rgba(30, 30, 30, 0.95);
+            border-color: rgba(255, 215, 0, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .matrix-total-btn:active {
+            transform: scale(0.97);
+        }
+
         .loading-text {
             text-align: center;
             font-size: 0.86rem;
@@ -409,7 +387,6 @@
 
     <div class="app-view">
         
-        <!-- Header with "ወደ መነሻ" removed -->
         <header>
             <a href="index.html" class="logo">BYD <span>LOTTER</span></a>
             <div class="header-right-group">
@@ -417,9 +394,6 @@
                     <span class="pulse-dot"></span>
                     <span class="live-tracker-text">Live Active</span>
                 </div>
-                <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeToggleBtn">
-                    <span>🌓 B&W</span>
-                </button>
             </div>
         </header>
 
@@ -432,9 +406,9 @@
             <!-- 3-Column Grid Container -->
             <div id="lastTicketsContainer" class="tickets-3col-grid"></div>
 
-            <!-- Description Card with Bold & Enlarged 1000Birr Only -->
+            <!-- Description Card -->
             <div class="info-description-card">
-                <p>        <span class="price-highlight">1000 Birr  Only | 1000 ብር ብቻ  </span>!</p>
+                <p><span class="price-highlight">1000 Birr Only | 1000 ብር ብቻ</span>!</p>
             </div>
 
             <!-- Summary Counters -->
@@ -449,45 +423,37 @@
                 </div>
             </div>
 
-            <!-- Buy Ticket Button with 3D Luxury Animation -->
-            <button class="buy-ticket-btn" onclick="window.location.href='car3.html'">
-                <span>Buy Ticket Now</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </button>
+            <!-- Action Buttons Group (Buy Ticket + View Live Matrix Total) -->
+            <div class="action-buttons-group">
+                <button class="buy-ticket-btn" onclick="window.location.href='car3.html'">
+                    <span>Buy Ticket Now</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+                <button class="matrix-total-btn" onclick="window.location.href='car4.html'">
+                    <span>View Live Matrix Total</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
 
         </div>
 
     </div>
-
-    <script>
-        function toggleTheme() {
-            document.body.classList.toggle('bw-mode');
-            const isBw = document.body.classList.contains('bw-mode');
-            document.getElementById('themeToggleBtn').innerHTML = isBw ? '<span>🎨 Color</span>' : '<span>🌓 B&W</span>';
-            localStorage.setItem('app_theme_mode', isBw ? 'bw' : 'dark');
-        }
-
-        if(localStorage.getItem('app_theme_mode') === 'bw') {
-            document.body.classList.add('bw-mode');
-            document.getElementById('themeToggleBtn').innerHTML = '<span>🎨 Color</span>';
-        }
-    </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyCRHoIZf1ZPR9m3YYTv-I9CfwyGqsSOMWo",
-            authDomain: "birrgo-fdf7e.firebaseapp.com",
-            databaseURL: "https://birrgo-fdf7e-default-rtdb.firebaseio.com",
-            projectId: "birrgo-fdf7e",
-            storageBucket: "birrgo-fdf7e.firebasestorage.app",
-            messagingSenderId: "2317445154",
-            appId: "1:2317445154:web:4275cbb0f46b28f64f827b"
+            apiKey: "YOUR_NEW_FIREBASE_WEB_API_KEY",
+            authDomain: "byd-87f69.firebaseapp.com",
+            databaseURL: "https://byd-87f69-default-rtdb.firebaseio.com",
+            projectId: "byd-87f69",
+            storageBucket: "byd-87f69.firebasestorage.app",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
-        const MAX_TICKET_NUMBER = 3500;
+        const MAX_TICKET_NUMBER = 10000;
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
@@ -505,17 +471,15 @@
                 const takenList = [];
                 
                 Object.values(data).forEach(t => {
-                    if (t) {
+                    if (t && t.ticketNum !== undefined && !isNaN(t.ticketNum)) {
                         const st = (t.status || '').toLowerCase().trim();
-                        if (st === 'approved' || st === 'pending' || st === '') {
-                            const rawNum = t.ticketNum !== undefined ? t.ticketNum : (t.pos !== undefined ? t.pos : (t.ticket !== undefined ? t.ticket : null));
-                            if (rawNum !== null && !isNaN(rawNum)) {
-                                takenList.push({
-                                    ticketNum: parseInt(rawNum, 10),
-                                    phone: t.phone || t.cardSequence || t.user_phone || "0900000000",
-                                    location: t.location || t.loc || "Addis Ababa"
-                                });
-                            }
+                        if (st === 'approved' || st === 'pending') {
+                            takenList.push({
+                                ticketNum: parseInt(t.ticketNum, 10),
+                                phone: t.phone || "0900000000",
+                                location: t.location || "Addis Ababa",
+                                timestamp: t.timestamp || 0
+                            });
                         }
                     }
                 });
@@ -529,13 +493,14 @@
                 container.innerHTML = '';
 
                 if (takenList.length > 0) {
-                    takenList.sort((a, b) => b.ticketNum - a.ticketNum);
+                    container.style.display = 'grid';
+                    takenList.sort((a, b) => (b.timestamp - a.timestamp) || (b.ticketNum - a.ticketNum));
                     
                     const top3 = takenList.slice(0, 3);
                     
                     top3.forEach(latest => {
                         const paddedNum = latest.ticketNum.toString().padStart(4, '0');
-                        const rawPhone = latest.phone;
+                        const rawPhone = String(latest.phone);
                         const hiddenPhone = rawPhone.length >= 7 ? rawPhone.substring(0, 5) + "••" : rawPhone;
 
                         const ticketBox = document.createElement('div');
