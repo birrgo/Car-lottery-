@@ -483,7 +483,7 @@
 
     <!-- Header -->
     <header>
-        <a href="index.html" class="logo">BYD <span>LOTTER</span></a>
+        <a href="car3.html" class="logo">BYD <span>LOTTER</span></a>
     </header>
 
     <!-- Main Content Area -->
@@ -670,7 +670,7 @@
                 try {
                     const parsed = JSON.parse(savedProfileRaw);
                     if (parsed && parsed.cardSequence && parsed.fullName && parsed.city) {
-                        window.location.href = "index.html";
+                        window.location.href = "car3.html";
                         return;
                     }
                 } catch (e) {
@@ -743,7 +743,7 @@
                 localStorage.setItem('auth_session_phone', rawPhone);
                 sessionStorage.setItem('auth_session_phone', rawPhone);
 
-                window.location.href = "index.html";
+                window.location.href = "car3.html";
             } catch (err) {
                 console.error("Account Save Error:", err);
                 showError("Failed to save account. Check your connection and try again.");
@@ -815,7 +815,7 @@
                 localStorage.setItem('auth_session_phone', rawPhone);
                 sessionStorage.setItem('auth_session_phone', rawPhone);
 
-                window.location.href = "index.html";
+                window.location.href = "car3.html";
             } catch (err) {
                 console.error("Login Error:", err);
                 showError("Failed to sign in. Check your connection and try again.");
