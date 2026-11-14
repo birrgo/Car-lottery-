@@ -12,6 +12,7 @@
         :root {
             --dark-bg: #050505;
             --accent-red: #ff1a1a;
+            --accent-green: #10b981;
             --text-light: #ffffff;
             --text-muted: #dedede;
             --card-bg: rgba(15, 15, 15, 0.78);
@@ -102,32 +103,32 @@
             align-items: center;
         }
 
-        /* Bold & Clear Red/White Live Tracker Badge */
+        /* Bold & Clear Green Live Tracker Badge */
         .live-tracker-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.25) 0%, rgba(0, 0, 0, 0.6) 100%);
-            border: 1.5px solid rgba(255, 26, 26, 0.6);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(0, 0, 0, 0.6) 100%);
+            border: 1.5px solid rgba(16, 185, 129, 0.65);
             padding: 5px 12px;
             border-radius: 20px;
             backdrop-filter: blur(6px);
-            box-shadow: 0 0 12px rgba(255, 26, 26, 0.3);
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.35);
         }
 
         .pulse-dot {
             width: 8px;
             height: 8px;
-            background-color: #ff1a1a;
+            background-color: #10b981;
             border-radius: 50%;
-            box-shadow: 0 0 8px #ff1a1a, 0 0 12px #ff1a1a;
+            box-shadow: 0 0 8px #10b981, 0 0 12px #34d399;
             animation: pulse-animation 1.2s infinite;
         }
 
         @keyframes pulse-animation {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 26, 26, 0.9); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(255, 26, 26, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 26, 26, 0); }
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.9); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
         .live-tracker-text {
@@ -154,6 +155,64 @@
         }
         .app-content::-webkit-scrollbar { display: none; }
 
+        /* User Personal Info Profile Card with Top-Right Ticket Badges */
+        .user-profile-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glass);
+            border-left: 3.5px solid var(--accent-red);
+            padding: 12px 14px;
+            border-radius: var(--border-radius-md);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .user-profile-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .user-profile-name {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-light);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-profile-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .user-profile-tickets {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 5px;
+            max-width: 48%;
+            flex-shrink: 0;
+        }
+
+        .my-ticket-pill {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(127, 29, 29, 0.5) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.55);
+            color: #ffd700;
+            padding: 3px 8px;
+            border-radius: 7px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+        }
+
         .info-description-card {
             background: var(--card-bg);
             border: 1px solid var(--border-glass);
@@ -163,13 +222,6 @@
             backdrop-filter: blur(10px);
             box-shadow: var(--card-shadow);
             text-align: center;
-        }
-
-        .info-description-card p {
-            font-size: 0.86rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            line-height: 1.35;
         }
 
         .price-highlight {
@@ -235,7 +287,7 @@
             background: var(--card-bg);
             border: 1px solid var(--border-glass);
             border-left: 3.5px solid var(--accent-red);
-            padding: 12px 8px;
+            padding: 11px 7px;
             border-radius: var(--border-radius-md);
             box-shadow: var(--card-shadow);
             backdrop-filter: blur(10px);
@@ -244,7 +296,7 @@
             align-items: center;
             text-align: center;
             justify-content: space-between;
-            min-height: 85px;
+            min-height: 98px;
         }
 
         .number-badge {
@@ -259,15 +311,31 @@
         }
 
         .owner-phone { 
-            font-size: 0.85rem; 
+            font-size: 0.82rem; 
             font-weight: 800; 
             color: var(--text-light); 
         }
         
         .owner-meta { 
-            font-size: 0.75rem; 
+            font-size: 0.74rem; 
+            font-weight: 600;
             color: var(--text-muted); 
             margin-top: 2px; 
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .owner-location {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #38bdf8;
+            margin-top: 2px;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         /* Action Buttons Container */
@@ -339,7 +407,6 @@
                 inset 0 2px 2px rgba(255, 255, 255, 0.8);
         }
 
-        /* Secondary Matrix Total Button */
         .matrix-total-btn {
             display: inline-flex;
             align-items: center;
@@ -485,31 +552,40 @@
 
         <div class="app-content">
             
+            <!-- User Login Personal Information Card with Ticket Numbers on Top-Right -->
+            <div id="userProfileCard" class="user-profile-card" style="display: none;">
+                <div class="user-profile-left">
+                    <div class="user-profile-name" id="userProfileFullName"></div>
+                    <div class="user-profile-meta" id="userProfileMeta"></div>
+                </div>
+                <div class="user-profile-tickets" id="userTicketsContainer" style="display: none;"></div>
+            </div>
+
             <div class="section-label">Recent 3 Taken Tickets</div>
 
-            <div id="loadingIndicator" class="loading-text">Fetching latest tickets...</div>
+            <div id="loadingIndicator" class="loading-text">Syncing database...</div>
 
             <!-- 3-Column Grid Container -->
             <div id="lastTicketsContainer" class="tickets-3col-grid"></div>
 
-            <!-- Description Card -->
-            <div class="info-description-card">
-                <p><span class="price-highlight">1000 Birr Only | 1000 ብር ብቻ</span>!</p>
+            <!-- Price Card (Strictly populated from /new_byd_settings in Firebase, without Total Limit) -->
+            <div class="info-description-card" id="settingsInfoCard" style="display: none;">
+                <p><span class="price-highlight" id="dynamicPriceDisplay"></span></p>
             </div>
 
             <!-- Summary Counters -->
             <div class="metrics-grid">
                 <div class="metric-card taken">
-                    <div class="metric-value" id="countTaken">0</div>
+                    <div class="metric-value" id="countTaken">--</div>
                     <div class="metric-label">Taken Numbers</div>
                 </div>
                 <div class="metric-card available">
-                    <div class="metric-value" id="countAvailable">0</div>
+                    <div class="metric-value" id="countAvailable">--</div>
                     <div class="metric-label">Available Numbers</div>
                 </div>
             </div>
 
-            <!-- Action Buttons Group (Buy Ticket + View Live Matrix Total) -->
+            <!-- Action Buttons Group -->
             <div class="action-buttons-group">
                 <button class="buy-ticket-btn" onclick="window.location.href='car3.html'">
                     <span>Buy Ticket Now</span>
@@ -527,53 +603,181 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, onValue, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
-            apiKey: "YOUR_NEW_FIREBASE_WEB_API_KEY",
-            authDomain: "byd-87f69.firebaseapp.com",
-            databaseURL: "https://byd-87f69-default-rtdb.firebaseio.com",
-            projectId: "byd-87f69",
-            storageBucket: "byd-87f69.firebasestorage.app",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            databaseURL: "https://byd-87f69-default-rtdb.firebaseio.com"
         };
 
-        const MAX_TICKET_NUMBER = 10000;
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
+        // Retrieve logged-in user identification keys from localStorage or stored profiles
+        let currentUserId = localStorage.getItem('byd_user_uid') || localStorage.getItem('userId') || "";
+        let currentUserPhone = localStorage.getItem('byd_user_phone') || localStorage.getItem('userPhone') || "";
+
+        const savedProfileRaw = localStorage.getItem('byd_user_profile');
+        if (savedProfileRaw) {
+            try {
+                const p = JSON.parse(savedProfileRaw);
+                if (p.cardSequence) currentUserId = p.cardSequence;
+                if (p.phone) currentUserPhone = p.phone;
+            } catch (e) {}
+        }
+
+        let dbTotalTickets = null;
+        let dbTakenCount = null;
+
         document.addEventListener('DOMContentLoaded', () => {
-            fetchLatestTicketsData();
+            fetchPortalData();
+            fetchUserProfileData();
         });
 
-        function fetchLatestTicketsData() {
-            const ticketsRef = ref(db, 'new_byd/tickets');
+        // Format phone number: skip leading 0 (or +251/251) and show digits from 2nd to 5th position (e.g. 0912345678 -> 9123****)
+        function formatMaskedPhone(rawPhone) {
+            if (!rawPhone) return "";
+            let digits = String(rawPhone).replace(/\D/g, '');
+            if (digits.startsWith('251')) {
+                digits = digits.slice(3);
+            } else if (digits.startsWith('0')) {
+                digits = digits.slice(1);
+            }
+            if (!digits) return "";
+            const visiblePart = digits.substring(0, 4);
+            return `${visiblePart}****`;
+        }
+
+        // Fetch logged-in user's personal info from /users/$uid or profile cache
+        async function fetchUserProfileData() {
+            const profileCard = document.getElementById('userProfileCard');
             
+            if (savedProfileRaw) {
+                try {
+                    const userData = JSON.parse(savedProfileRaw);
+                    if (userData && userData.fullName) {
+                        profileCard.style.display = 'flex';
+                        document.getElementById('userProfileFullName').innerText = userData.fullName;
+                        const metaParts = [userData.phone, userData.city || userData.country].filter(Boolean);
+                        document.getElementById('userProfileMeta').innerText = metaParts.join(' • ');
+                        return;
+                    }
+                } catch(e) {}
+            }
+
+            if (!currentUserId) {
+                profileCard.style.display = 'none';
+                return;
+            }
+
+            try {
+                const userSnap = await get(ref(db, `users/${currentUserId}`));
+                const userData = userSnap.val();
+                if (userData) {
+                    profileCard.style.display = 'flex';
+                    document.getElementById('userProfileFullName').innerText = userData.fullName || "";
+                    const metaParts = [userData.phone, userData.country || userData.city].filter(Boolean);
+                    document.getElementById('userProfileMeta').innerText = metaParts.join(' • ');
+                } else {
+                    profileCard.style.display = 'none';
+                }
+            } catch (err) {
+                profileCard.style.display = 'none';
+            }
+        }
+
+        function fetchPortalData() {
+            // 1. Read Settings (Price & Total Tickets Limit) strictly from /new_byd_settings
+            const settingsRef = ref(db, 'new_byd_settings');
+            onValue(settingsRef, (snapshot) => {
+                const rootSettings = snapshot.val();
+                const infoCard = document.getElementById('settingsInfoCard');
+
+                if (!rootSettings) {
+                    infoCard.style.display = 'none';
+                    return;
+                }
+
+                const settings = rootSettings.config || rootSettings;
+
+                const rawPrice = settings.price ?? settings.ticketPrice ?? settings.amount;
+                const rawTotal = settings.totalTickets ?? settings.maxTickets ?? settings.total ?? settings.limit;
+
+                const parsedPrice = rawPrice !== undefined && rawPrice !== null && rawPrice !== '' ? Number(rawPrice) : null;
+                const parsedTotal = rawTotal !== undefined && rawTotal !== null && rawTotal !== '' ? parseInt(rawTotal, 10) : null;
+
+                if (parsedPrice !== null && !isNaN(parsedPrice)) {
+                    document.getElementById('dynamicPriceDisplay').innerText = `${parsedPrice.toLocaleString()} Birr Only | ${parsedPrice.toLocaleString()} ብር ብቻ`;
+                    infoCard.style.display = 'block';
+                } else {
+                    document.getElementById('dynamicPriceDisplay').innerText = '';
+                    infoCard.style.display = 'none';
+                }
+
+                if (parsedTotal !== null && !isNaN(parsedTotal)) {
+                    dbTotalTickets = parsedTotal;
+                } else {
+                    dbTotalTickets = null;
+                }
+
+                updateAvailableCount();
+            });
+
+            // 2. Read Tickets from /new_byd/tickets
+            const ticketsRef = ref(db, 'new_byd/tickets');
             onValue(ticketsRef, (snapshot) => {
                 document.getElementById('loadingIndicator').style.display = 'none';
                 const data = snapshot.val() || {};
 
                 const takenList = [];
+                const myTicketsList = [];
                 
                 Object.values(data).forEach(t => {
                     if (t && t.ticketNum !== undefined && !isNaN(t.ticketNum)) {
-                        const st = (t.status || '').toLowerCase().trim();
-                        if (st === 'approved' || st === 'pending') {
-                            takenList.push({
+                        const st = String(t.status || '').toLowerCase().trim();
+                        if (st === 'approved' || st === 'pending' || st === 'pending approval') {
+                            const locValue = t.location || t.city || t.country || "";
+                            const ticketObj = {
                                 ticketNum: parseInt(t.ticketNum, 10),
-                                phone: t.phone || "0900000000",
-                                location: t.location || "Addis Ababa",
-                                timestamp: t.timestamp || 0
-                            });
+                                phone: t.phone ? String(t.phone).trim() : "",
+                                fullName: t.fullName ? String(t.fullName).trim() : "",
+                                location: locValue ? String(locValue).trim() : "",
+                                timestamp: Number(t.timestamp) || 0,
+                                userId: t.userId ? String(t.userId).trim() : "",
+                                cardSequence: t.cardSequence ? String(t.cardSequence).trim() : ""
+                            };
+                            takenList.push(ticketObj);
+
+                            // Check if this ticket belongs to the logged-in user
+                            const isUserMatch = (currentUserId && (ticketObj.userId === currentUserId || ticketObj.cardSequence === currentUserId)) || 
+                                                (currentUserPhone && ticketObj.phone === currentUserPhone);
+
+                            if (isUserMatch && st !== 'unpaid') {
+                                myTicketsList.push(ticketObj.ticketNum);
+                            }
                         }
                     }
                 });
 
-                const takenCount = takenList.length;
-                const availableCount = (MAX_TICKET_NUMBER + 1) - takenCount;
-                document.getElementById('countTaken').innerText = takenCount;
-                document.getElementById('countAvailable').innerText = availableCount;
+                // Render user's purchased ticket badges on the top-right corner of their profile card
+                const userTicketsContainer = document.getElementById('userTicketsContainer');
+                userTicketsContainer.innerHTML = '';
+
+                if (myTicketsList.length > 0) {
+                    userTicketsContainer.style.display = 'flex';
+                    const uniqueUserTickets = [...new Set(myTicketsList)].sort((a, b) => a - b);
+                    uniqueUserTickets.forEach(num => {
+                        const pill = document.createElement('span');
+                        pill.className = 'my-ticket-pill';
+                        pill.innerText = `#${num.toString().padStart(4, '0')}`;
+                        userTicketsContainer.appendChild(pill);
+                    });
+                } else {
+                    userTicketsContainer.style.display = 'none';
+                }
+
+                dbTakenCount = takenList.length;
+                document.getElementById('countTaken').innerText = dbTakenCount.toLocaleString();
+                updateAvailableCount();
 
                 const container = document.getElementById('lastTicketsContainer');
                 container.innerHTML = '';
@@ -582,19 +786,20 @@
                     container.style.display = 'grid';
                     takenList.sort((a, b) => (b.timestamp - a.timestamp) || (b.ticketNum - a.ticketNum));
                     
+                    // Recent top 3 taken tickets
                     const top3 = takenList.slice(0, 3);
                     
                     top3.forEach(latest => {
                         const paddedNum = latest.ticketNum.toString().padStart(4, '0');
-                        const rawPhone = String(latest.phone);
-                        const hiddenPhone = rawPhone.length >= 7 ? rawPhone.substring(0, 5) + "••" : rawPhone;
+                        const maskedPhone = formatMaskedPhone(latest.phone);
 
                         const ticketBox = document.createElement('div');
                         ticketBox.className = 'ticket-grid-box';
                         ticketBox.innerHTML = `
                             <div class="number-badge">#${paddedNum}</div>
-                            <div class="owner-phone">👤 ${hiddenPhone}</div>
-                            <div class="owner-meta">📍 ${latest.location}</div>
+                            ${maskedPhone ? `<div class="owner-phone">📞 ${maskedPhone}</div>` : ''}
+                            ${latest.fullName ? `<div class="owner-meta">👤 ${latest.fullName}</div>` : ''}
+                            ${latest.location ? `<div class="owner-location"> ${latest.location}</div>` : ''}
                         `;
                         container.appendChild(ticketBox);
                     });
@@ -616,6 +821,13 @@
                     container.innerHTML = `<div class="loading-text">No taken tickets found yet.</div>`;
                 }
             });
+        }
+
+        function updateAvailableCount() {
+            if (dbTotalTickets === null || dbTakenCount === null) return;
+            const totalSlots = dbTotalTickets + 1;
+            const availableCount = Math.max(0, totalSlots - dbTakenCount);
+            document.getElementById('countAvailable').innerText = availableCount.toLocaleString();
         }
     </script>
 
