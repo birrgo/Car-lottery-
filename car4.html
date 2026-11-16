@@ -435,11 +435,11 @@
             <!-- Summary Counters -->
             <div class="metrics-grid">
                 <div class="metric-card taken">
-                    <div class="metric-value" id="countTaken">0</div>
+                    <div class="metric-value" id="countTaken">--</div>
                     <div class="metric-label">Taken Numbers</div>
                 </div>
                 <div class="metric-card available">
-                    <div class="metric-value" id="countAvailable">0</div>
+                    <div class="metric-value" id="countAvailable">--</div>
                     <div class="metric-label">Available Numbers</div>
                 </div>
             </div>
@@ -479,10 +479,12 @@
             appId: "YOUR_APP_ID"
         };
 
-        const MAX_TICKET_NUMBER = 10000;
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         
+        let dbTotalTickets = null;
+        let latestTakenMap = new Map();
+        let ticketsLoaded = false;
         let masterAllPool = [];
         let currentFilter = 'taken';
 
@@ -492,63 +494,102 @@
         });
 
         function fetchAllocatedRegistry() {
-            const ticketsRef = ref(db, 'new_byd/tickets');
-            
-            onValue(ticketsRef, (snapshot) => {
-                document.getElementById('loadingIndicator').style.display = 'none';
-                const data = snapshot.val() || {};
+            // 1. Read Total Tickets Limit from /new_byd_settings
+            const settingsRef = ref(db, 'new_byd_settings');
+            onValue(settingsRef, (snapshot) => {
+                const rootSettings = snapshot.val();
+                if (rootSettings) {
+                    const settings = rootSettings.config || rootSettings;
+                    const rawTotal = settings.totalTickets ?? settings.maxTickets ?? settings.total ?? settings.limit;
+                    const parsedTotal = rawTotal !== undefined && rawTotal !== null && rawTotal !== '' ? parseInt(rawTotal, 10) : null;
 
+                    if (parsedTotal !== null && !isNaN(parsedTotal)) {
+                        dbTotalTickets = parsedTotal;
+                    } else {
+                        dbTotalTickets = null;
+                    }
+                } else {
+                    dbTotalTickets = null;
+                }
+
+                rebuildRegistryPool();
+            });
+
+            // 2. Read Tickets from /new_byd/tickets
+            const ticketsRef = ref(db, 'new_byd/tickets');
+            onValue(ticketsRef, (snapshot) => {
+                ticketsLoaded = true;
+                const data = snapshot.val() || {};
                 const takenMap = new Map();
                 
                 Object.values(data).forEach(t => {
                     if (t && t.ticketNum !== undefined && !isNaN(t.ticketNum)) {
-                        const st = (t.status || '').toLowerCase().trim();
-                        if (st === 'approved' || st === 'pending') {
+                        const st = String(t.status || '').toLowerCase().trim();
+                        if (st === 'approved' || st === 'pending' || st === 'pending approval') {
                             const parsedNum = parseInt(t.ticketNum, 10);
                             takenMap.set(parsedNum, {
                                 ticketNum: parsedNum,
                                 phone: t.phone || "0900000000",
-                                location: t.location || "Addis Ababa",
+                                location: t.location || t.city || t.country || "Addis Ababa",
                                 cardSequence: t.cardSequence || ""
                             });
                         }
                     }
                 });
 
-                masterAllPool = [];
-                for (let i = 0; i <= MAX_TICKET_NUMBER; i++) {
-                    const paddedNum = i.toString().padStart(4, '0');
-                    if (takenMap.has(i)) {
-                        const info = takenMap.get(i);
-                        masterAllPool.push({
-                            ticketNum: paddedNum,
-                            status: 'taken',
-                            phone: info.phone,
-                            location: info.location,
-                            cardSequence: info.cardSequence
-                        });
-                    } else {
-                        masterAllPool.push({
-                            ticketNum: paddedNum,
-                            status: 'available',
-                            phone: null,
-                            location: null,
-                            cardSequence: null
-                        });
-                    }
-                }
-
-                updateSummaryMetrics();
-                applyFiltersAndRender();
+                latestTakenMap = takenMap;
+                rebuildRegistryPool();
             });
         }
 
-        function updateSummaryMetrics() {
-            const takenCount = masterAllPool.filter(t => t.status === 'taken').length;
-            const availableCount = (MAX_TICKET_NUMBER + 1) - takenCount;
+        function rebuildRegistryPool() {
+            if (!ticketsLoaded) return;
 
-            document.getElementById('countTaken').innerText = takenCount;
-            document.getElementById('countAvailable').innerText = availableCount;
+            document.getElementById('countTaken').innerText = latestTakenMap.size.toLocaleString();
+
+            // Wait until totalTickets is loaded from /new_byd_settings before generating the pool
+            if (dbTotalTickets === null) {
+                document.getElementById('countAvailable').innerText = '--';
+                return;
+            }
+
+            document.getElementById('loadingIndicator').style.display = 'none';
+
+            masterAllPool = [];
+            for (let i = 0; i <= dbTotalTickets; i++) {
+                const paddedNum = i.toString().padStart(4, '0');
+                if (latestTakenMap.has(i)) {
+                    const info = latestTakenMap.get(i);
+                    masterAllPool.push({
+                        ticketNum: paddedNum,
+                        status: 'taken',
+                        phone: info.phone,
+                        location: info.location,
+                        cardSequence: info.cardSequence
+                    });
+                } else {
+                    masterAllPool.push({
+                        ticketNum: paddedNum,
+                        status: 'available',
+                        phone: null,
+                        location: null,
+                        cardSequence: null
+                    });
+                }
+            }
+
+            updateSummaryMetrics();
+            applyFiltersAndRender();
+        }
+
+        function updateSummaryMetrics() {
+            if (dbTotalTickets === null) return;
+            const takenCount = latestTakenMap.size;
+            const totalSlots = dbTotalTickets + 1;
+            const availableCount = Math.max(0, totalSlots - takenCount);
+
+            document.getElementById('countTaken').innerText = takenCount.toLocaleString();
+            document.getElementById('countAvailable').innerText = availableCount.toLocaleString();
         }
 
         window.setFilter = function(filter, element) {
@@ -608,7 +649,7 @@
                         <div class="number-badge">#${ticket.ticketNum}</div>
                         <div class="owner-details">
                             <div class="owner-phone">👤 ${hiddenPhone}</div>
-                            <div class="owner-meta">📍 ${location}</div>
+                            <div class="owner-meta"> ${location}</div>
                         </div>
                     `;
                 } else {
